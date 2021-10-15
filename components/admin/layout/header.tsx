@@ -1,24 +1,35 @@
 import React from "react";
 import { Box, Theme } from "@mui/material";
-import { ComponentProps } from "../../../types";
+import { State } from "../../../types";
 import { makeStyles } from "@mui/styles";
+import { connect } from "react-redux";
 
-interface HeaderProps extends ComponentProps {}
+function Header(props: any) {
+  const { siteInfo } = props;
+  const useStyles = makeStyles((theme: Theme) => ({
+    header: {
+      display: "flex",
+    },
+    logo: {
+      fontSize: "20pt",
+    },
+    title: {},
+  }));
 
-interface HeaderState {}
+  const classes = useStyles();
 
-class Header extends React.Component<HeaderProps, HeaderState> {
-  render() {
-    return <Box className={this.props.classes.header}>HEADER</Box>;
-  }
+  return (
+    <Box className={classes.header}>
+      <Box className={classes.logo}>📔</Box>
+      <Box className={classes.title}>{siteInfo.title}</Box>
+    </Box>
+  );
 }
 
-const Export = () => {
-  const useStyles = makeStyles((theme: Theme) => ({
-    header: {},
-  }));
-  const classes = useStyles();
-  return <Header classes={classes} />;
-};
+function mapStateToProps(state: State) {
+  return {
+    ...state,
+  };
+}
 
-export default Export;
+export default connect(mapStateToProps)(Header);

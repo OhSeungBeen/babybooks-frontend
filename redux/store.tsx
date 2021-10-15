@@ -1,11 +1,12 @@
-import { createWrapper } from "next-redux-wrapper";
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, Store, AnyAction } from "redux";
+import { createWrapper, Context } from "next-redux-wrapper";
 import thunk from "redux-thunk";
 import reducer from "./reducer";
+import { State } from "../types";
 
-const makeStore = () => {
+const makeStore = (context: Context) => {
   const store = createStore(reducer, applyMiddleware(thunk));
   return store;
 };
 
-export default createWrapper(makeStore, { debug: false });
+export const wrapper = createWrapper<Store<State>>(makeStore, { debug: true });

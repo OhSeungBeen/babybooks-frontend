@@ -1,23 +1,10 @@
 import React from "react";
 import { Box, Theme } from "@mui/material";
-import { ComponentProps } from "../../../types";
+import { State } from "../../../types";
 import { makeStyles } from "@mui/styles";
+import { connect } from "react-redux";
 
-interface FooterProps extends ComponentProps {}
-
-interface FooterState {}
-
-class Footer extends React.Component<FooterProps, FooterState> {
-  render() {
-    return (
-      <footer className={this.props.classes.footer}>
-        <Box>Copyright ⓒ 베비북스 All rights reserved.</Box>
-      </footer>
-    );
-  }
-}
-
-const Export = () => {
+function Footer(props: any) {
   const useStyles = makeStyles((theme: Theme) => ({
     footer: {
       width: "100%",
@@ -29,8 +16,20 @@ const Export = () => {
       zIndex: 1,
     },
   }));
-  const classes = useStyles();
-  return <Footer classes={classes} />;
-};
 
-export default Export;
+  const classes = useStyles();
+
+  return (
+    <footer className={classes.footer}>
+      <Box>Copyright ⓒ 베비북스 All rights reserved.</Box>
+    </footer>
+  );
+}
+
+function mapStateToProps(state: State) {
+  return {
+    ...state,
+  };
+}
+
+export default connect(mapStateToProps)(Footer);

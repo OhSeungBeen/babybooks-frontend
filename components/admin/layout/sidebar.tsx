@@ -2,32 +2,10 @@ import React from "react";
 
 import { Drawer, Box, Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { ComponentProps } from "../../../types";
+import { State } from "../../../types";
+import { connect } from "react-redux";
 
-interface SidebarProps extends ComponentProps {}
-
-interface SidebarState {}
-
-class Sidebar extends React.Component<SidebarProps, SidebarState> {
-  render() {
-    return (
-      <nav className={this.props.classes.nav}>
-        <Drawer
-          variant={"persistent"}
-          ModalProps={{ keepMounted: true }}
-          open={true}
-          classes={{
-            paper: this.props.classes.drawerPaper,
-          }}
-        >
-          <Box className={this.props.classes.drawContainor}>SIDEBAR</Box>
-        </Drawer>
-      </nav>
-    );
-  }
-}
-
-const Export = () => {
+function Sidebar(props: any) {
   const drawerWidth = "250px";
   const headerHeight = "64px";
   const footerHeight = "44px";
@@ -54,8 +32,29 @@ const Export = () => {
       borderColor: theme.palette.primary.main,
     },
   }));
-  const classes = useStyles();
-  return <Sidebar classes={classes} />;
-};
 
-export default Export;
+  const classes = useStyles();
+
+  return (
+    <nav className={classes.nav}>
+      <Drawer
+        variant={"persistent"}
+        ModalProps={{ keepMounted: true }}
+        open={true}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <Box className={classes.drawContainor}>SIDEBAR</Box>
+      </Drawer>
+    </nav>
+  );
+}
+
+function mapStateToProps(state: State) {
+  return {
+    ...state,
+  };
+}
+
+export default connect(mapStateToProps)(Sidebar);
