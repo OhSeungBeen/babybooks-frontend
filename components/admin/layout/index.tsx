@@ -5,8 +5,9 @@ import { CssBaseline, ThemeProvider, Box } from "@mui/material";
 import { defaultTheme } from "../../../config/theme";
 
 import Header from "./header";
-import Sidebar from "./sidebar";
+import SideBar from "./sidebar";
 import Footer from "./footer";
+import TabBar from "./tabbar";
 
 function AdminLayout(props: any) {
   const { children } = props;
@@ -22,8 +23,11 @@ function AdminLayout(props: any) {
         <Box sx={{ position: "absolute", width: "100%", height: "100%" }}>
           <Header />
           <Box sx={{ display: "flex" }}>
-            <Sidebar />
-            <main>{children}</main>
+            <SideBar />
+            <Box>
+              <TabBar />
+              <main>{children}</main>
+            </Box>
           </Box>
           <Footer />
         </Box>

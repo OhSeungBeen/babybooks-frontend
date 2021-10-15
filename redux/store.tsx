@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, Store, AnyAction } from "redux";
+import { createStore, applyMiddleware, Store } from "redux";
 import { createWrapper, Context } from "next-redux-wrapper";
 import thunk from "redux-thunk";
 import reducer from "./reducer";

@@ -1,13 +1,20 @@
+import { AnyAction } from "redux";
+import { SiteInfoState } from "../../types";
 import initialState from "../defaultState";
 
-export const SITEINFO_AVAILABLE = "SITEINFO_AVAILABLE";
+enum ActionType {
+  SITEINFO_AVAILABLE,
+}
 
-export const siteInfoReducer = (state = initialState.siteInfo, action: any) => {
+export function reducer(
+  state = initialState.siteInfo,
+  action: AnyAction
+): SiteInfoState {
   switch (action.type) {
-    case SITEINFO_AVAILABLE:
+    case ActionType.SITEINFO_AVAILABLE:
       const { siteInfo } = action;
-      return { ...initialState, ...siteInfo };
+      return { ...initialState.siteInfo, ...siteInfo };
     default:
-      return { ...state };
+      return state;
   }
-};
+}

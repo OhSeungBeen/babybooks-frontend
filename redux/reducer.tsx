@@ -1,14 +1,18 @@
 import { combineReducers, AnyAction } from "redux";
 import { HYDRATE } from "next-redux-wrapper";
 import initialState from "./defaultState";
-import { siteInfoReducer } from "./actions";
+import * as Actions from "./actions";
 import { State } from "../types";
 
 const appReducers = combineReducers<State>({
-  siteInfo: siteInfoReducer,
+  siteInfo: Actions.SiteInfoAction.reducer,
+  tabs: Actions.TabsAction.reducer,
 });
 
-const reducer = (state: State = initialState, action: AnyAction) => {
+export default function reducer(
+  state: State = initialState,
+  action: AnyAction
+) {
   if (action.type === HYDRATE) {
     const nextState = {
       ...state,
@@ -17,6 +21,4 @@ const reducer = (state: State = initialState, action: AnyAction) => {
     return nextState;
   }
   return appReducers(state, action);
-};
-
-export default reducer;
+}
