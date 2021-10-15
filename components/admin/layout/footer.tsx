@@ -14,6 +14,7 @@ function Footer(props: any) {
       textAlign: "right",
       padding: "10px",
       zIndex: 1,
+      fontSize: "10pt",
     },
   }));
 
