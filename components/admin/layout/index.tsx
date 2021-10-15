@@ -1,13 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import { ADMIN_PAGE_TITLE } from "../../../config/strings";
-import {
-  CssBaseline,
-  ThemeProvider,
-  AppBar,
-  Toolbar,
-  Box,
-} from "@mui/material";
+import { CssBaseline, ThemeProvider, Box } from "@mui/material";
 import { defaultTheme } from "../../../config/theme";
 
 import Header from "./header";
@@ -26,11 +20,7 @@ function AdminLayout(props: any) {
       <ThemeProvider theme={defaultTheme}>
         <CssBaseline />
         <Box sx={{ position: "absolute", width: "100%", height: "100%" }}>
-          <AppBar position="relative">
-            <Toolbar>
-              <Header />
-            </Toolbar>
-          </AppBar>
+          <Header />
           <Box sx={{ display: "flex" }}>
             <Sidebar />
             <main>{children}</main>
