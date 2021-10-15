@@ -32,6 +32,7 @@ export function reducer(
       if (index >= delIndex) {
         index--;
       }
+
       state.items.splice(delIndex, 1);
       return { ...state, index };
     }
