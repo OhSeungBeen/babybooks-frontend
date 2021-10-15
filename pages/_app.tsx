@@ -25,4 +25,11 @@ WrappedApp.getInitialProps = async (
   return { ...appProps };
 };
 
+WrappedApp.componentDidMount = () => {
+  const jssStyles = document.querySelector("#jss-server-side");
+  if (jssStyles) {
+    jssStyles.parentElement.removeChild(jssStyles);
+  }
+};
+
 export default wrapper.withRedux(WrappedApp);
