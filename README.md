@@ -4,6 +4,8 @@ Language: `Typescript`
 
 Framework: `Nextjs`
 
+Dependencies: `Redux` `Webpack`
+
 UI: `MUI`
 
 `https://github.com/codedthemes/berry-free-react-admin-template`
