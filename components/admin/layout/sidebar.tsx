@@ -5,7 +5,7 @@ import { makeStyles } from "@mui/styles";
 import { State } from "../../../types";
 import { connect } from "react-redux";
 
-function Sidebar(props: any) {
+function SideBar(props: any) {
   const drawerWidth = "250px";
   const headerHeight = "64px";
   const footerHeight = "44px";
@@ -57,4 +57,4 @@ function mapStateToProps(state: State) {
   };
 }
 
-export default connect(mapStateToProps)(Sidebar);
+export default connect(mapStateToProps)(SideBar);
