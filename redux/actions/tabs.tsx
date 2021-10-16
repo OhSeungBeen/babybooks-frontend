@@ -29,7 +29,7 @@ export function reducer(
       const tab = state.items.find((tab) => tab.id === id);
       const delIndex = state.items.indexOf(tab);
 
-      if (index >= delIndex) {
+      if (index >= delIndex && index > 0) {
         index--;
       }
 

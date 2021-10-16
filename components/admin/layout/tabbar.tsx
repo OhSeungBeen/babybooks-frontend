@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Button, Tab, Tabs, Theme } from "@mui/material";
+import { Box, Button, IconButton, Tab, Tabs, Theme } from "@mui/material";
+import { Close, LocalConvenienceStoreOutlined } from "@mui/icons-material";
 import { State, TabInfo } from "../../../types";
 import { makeStyles } from "@mui/styles";
 import { connect } from "react-redux";
@@ -16,6 +17,9 @@ function TabBar(props: any) {
       backgroundColor: theme.palette.secondary.light,
       display: "flex",
     },
+    tabClose: {
+      verticalAlign: "middle",
+    },
   }));
 
   const classes = useStyles();
@@ -28,21 +32,24 @@ function TabBar(props: any) {
     dispatch(TabsAction.addTab({ label: "TAB" + tabId, id: String(tabId++) }));
   };
 
-  const deleteTab = (event: React.SyntheticEvent) => {
-    if (event.target instanceof Element) {
-      event.stopPropagation();
-      dispatch(TabsAction.deleteTab(event.target.id));
-    }
+  const deleteTab = (event: React.SyntheticEvent, tab: TabInfo) => {
+    event.stopPropagation();
+    dispatch(TabsAction.deleteTab(tab.id));
   };
 
   const tabItems = tabs.items.map((tab: TabInfo) => (
     <Tab
       key={tab.id}
-      label={tab.label}
-      icon={
-        <Button id={tab.id} onClick={deleteTab}>
-          X
-        </Button>
+      label={
+        <Box>
+          <span>{tab.label}</span>
+          <a
+            className={classes.tabClose}
+            onClick={(event) => deleteTab(event, tab)}
+          >
+            <Close />
+          </a>
+        </Box>
       }
     />
   ));
