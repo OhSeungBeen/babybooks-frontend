@@ -3,7 +3,6 @@ import { ActionType } from ".";
 import { TabInfo, TabsState } from "../../types";
 import initialState from "../defaultState";
 
-
 export function reducer(
   state = initialState.tabs,
   action: AnyAction

@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Button, IconButton, Tab, Tabs, Theme } from "@mui/material";
-import { Close, LocalConvenienceStoreOutlined } from "@mui/icons-material";
+import { Box, Button, Tab, Tabs, Theme } from "@mui/material";
+import { Close } from "@mui/icons-material";
 import { State, TabInfo } from "../../../types";
 import { makeStyles } from "@mui/styles";
 import { connect } from "react-redux";

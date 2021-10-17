@@ -3,7 +3,6 @@ import { ActionType } from ".";
 import { SiteInfoState } from "../../types";
 import initialState from "../defaultState";
 
-
 export function reducer(
   state = initialState.siteInfo,
   action: AnyAction

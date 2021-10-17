@@ -9,7 +9,7 @@ const initialState: State = {
     index: 0,
     items: [],
   },
-  navigator: ["First", "Second"]
+  navigator: ["First", "Second"],
 };
 
 export default initialState;

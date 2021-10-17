@@ -7,7 +7,7 @@ import { State } from "../types";
 const appReducers = combineReducers<State>({
   siteInfo: Actions.SiteInfoAction.reducer,
   tabs: Actions.TabsAction.reducer,
-  navigator: Actions.NavigatorAction.reducer
+  navigator: Actions.NavigatorAction.reducer,
 });
 
 export default function reducer(
