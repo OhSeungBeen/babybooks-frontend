@@ -20,7 +20,7 @@ function Header(props: any) {
       height: "0.8em",
       marginLeft: "10px",
       marginRight: "10px",
-      border: "1px solid",
+      borderLeft: "1px solid",
       borderColor: theme.palette.secondary.main,
     },
   }));
