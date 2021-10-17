@@ -7,7 +7,7 @@ import { makeStyles } from "@mui/styles";
 
 import { PageAction } from "../../../redux/actions";
 
-function NavBar(props: any) {
+function Breadcrumb(props: any) {
   const { navigator, page, dispatch } = props;
   const text = navigator.join(" > ");
 
@@ -50,4 +50,4 @@ function mapDispatchToProps(dispatch: Function) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(Breadcrumb);

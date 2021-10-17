@@ -9,7 +9,7 @@ const Header = dynamic(() => import("./header"));
 const SideBar = dynamic(() => import("./sidebar"));
 const Footer = dynamic(() => import("./footer"));
 const TabBar = dynamic(() => import("./tabbar"));
-const NavBar = dynamic(() => import("./navbar"));
+const Breadcrumb = dynamic(() => import("./breadcrumb"));
 
 function AdminLayout(props: any) {
   const { children } = props;
@@ -28,7 +28,7 @@ function AdminLayout(props: any) {
             <SideBar />
             <Box sx={{ width: "100%", overflow: "hidden" }}>
               <TabBar />
-              <NavBar />
+              <Breadcrumb />
               <main>{children}</main>
             </Box>
           </Box>
