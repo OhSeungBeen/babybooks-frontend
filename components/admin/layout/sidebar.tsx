@@ -7,11 +7,13 @@ import { connect } from "react-redux";
 
 function SideBar(props: any) {
   const { app } = props;
-  const sideBarWidth = app.sideBar.isShow ? app.sideBar.width : "0px";
+  const sideBarWidth = app.sideBar.width;
   const headerHeight = "64px";
   const footerHeight = "44px";
   const useStyles = makeStyles((theme: Theme) => ({
     nav: {
+      marginLeft: `-${app.sideBar.isShow ? "0px" : sideBarWidth}`,
+      transition: "margin 200ms cubic-bezier(0.4, 0, 0.6, 1) 0ms",
       [theme.breakpoints.up("md")]: {
         width: sideBarWidth,
         flexShrink: 0,
@@ -32,7 +34,6 @@ function SideBar(props: any) {
       borderStyle: "solid",
       borderColor: theme.palette.primary.main,
     },
-    
   }));
 
   const classes = useStyles();
