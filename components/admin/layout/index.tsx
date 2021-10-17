@@ -25,7 +25,7 @@ function AdminLayout(props: any) {
           <Header />
           <Box sx={{ display: "flex" }}>
             <SideBar />
-            <Box>
+            <Box sx={{ width: "100%", overflow: "hidden" }}>
               <TabBar />
               <NavBar />
               <main>{children}</main>
