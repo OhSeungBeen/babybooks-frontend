@@ -5,17 +5,12 @@
 import React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheets } from "@mui/styles";
-import { defaultTheme } from "../config/theme";
 
 export default class MyDocument extends Document {
   render() {
     return (
       <Html>
         <Head>
-          <meta
-            name="theme-color"
-            content={defaultTheme.palette.primary.main}
-          />
         </Head>
         <body>
           <Main />
@@ -40,8 +35,10 @@ MyDocument.getInitialProps = async (ctx) => {
   return {
     ...initialProps,
     styles: [
-      ...React.Children.toArray(initialProps.styles),
-      sheets.getStyleElement(),
+      <React.Fragment key="styles">
+        {initialProps.styles}
+        {sheets.getStyleElement()}
+      </React.Fragment>,
     ],
   };
 };
