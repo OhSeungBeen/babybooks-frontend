@@ -8,8 +8,8 @@ import { makeStyles } from "@mui/styles";
 import { PageAction } from "../../../redux/actions";
 
 function Breadcrumb(props: any) {
-  const { navigator, page, dispatch } = props;
-  const text = navigator.join(" > ");
+  const { page, dispatch } = props;
+  const text = page.breadcrumb.join(" > ");
 
   const useStyles = makeStyles((theme: Theme) => ({
     favorites: {

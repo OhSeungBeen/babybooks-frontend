@@ -8,7 +8,6 @@ const appReducers = combineReducers<State>({
   app: Actions.AppAction.reducer,
   page: Actions.PageAction.reducer,
   tabs: Actions.TabsAction.reducer,
-  navigator: Actions.NavigatorAction.reducer,
 });
 
 export default function reducer(

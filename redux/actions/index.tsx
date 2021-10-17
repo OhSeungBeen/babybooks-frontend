@@ -1,7 +1,6 @@
 export * as AppAction from "./app";
 export * as PageAction from "./page";
 export * as TabsAction from "./tabs";
-export * as NavigatorAction from "./navigator";
 
 export enum ActionType {
   APP_SHOW_SIDEBAR,

@@ -10,13 +10,13 @@ const initialState: State = {
   },
   page: {
     title: ADMIN_PAGE_TITLE,
+    breadcrumb: ["First", "Second"],
     isFavorites: false,
   },
   tabs: {
     index: 0,
     items: [],
   },
-  navigator: ["First", "Second"],
 };
 
 export default initialState;

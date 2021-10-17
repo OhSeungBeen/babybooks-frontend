@@ -21,8 +21,7 @@ export function reducer(
       const { id } = action;
       let { index } = state;
 
-      const tab = state.items.find((tab) => tab.id === id);
-      const delIndex = state.items.indexOf(tab);
+      const delIndex = state.items.findIndex((tab) => tab.id === id);
 
       if (index >= delIndex && index > 0) {
         index--;

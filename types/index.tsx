@@ -5,11 +5,11 @@ export interface State {
   app: AppState;
   page: PageState;
   tabs: TabsState;
-  navigator: string[];
 }
 
 export interface PageState {
   title: string;
+  breadcrumb: string[];
   isFavorites: boolean;
 }
 
