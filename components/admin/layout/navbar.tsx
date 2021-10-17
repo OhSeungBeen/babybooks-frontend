@@ -1,13 +1,41 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Button, Theme } from "@mui/material";
 import { State } from "../../../types";
 import { connect } from "react-redux";
+import { Star, StarBorder } from "@mui/icons-material";
+import { makeStyles } from "@mui/styles";
+
+import { SiteInfoAction } from "../../../redux/actions";
 
 function NavBar(props: any) {
-  const { navigator } = props;
-  console.log(props);
+  const { navigator, siteInfo, dispatch } = props;
   const text = navigator.join(" > ");
-  return <Box>{text}</Box>;
+
+  const useStyles = makeStyles((theme: Theme) => ({
+    favorites: {
+      float: "right",
+    },
+  }));
+
+  const classes = useStyles();
+
+  const setFavorites = (event: React.SyntheticEvent) => {
+    dispatch(SiteInfoAction.setFavorites(!siteInfo.isFavorites));
+  };
+
+  const favorites = (
+    <Button className={classes.favorites} onClick={setFavorites}>
+      {siteInfo.isFavorites ? <Star /> : <StarBorder />}
+      즐겨찾기
+    </Button>
+  );
+
+  return (
+    <Box>
+      {text}
+      {favorites}
+    </Box>
+  );
 }
 
 function mapStateToProps(state: State) {

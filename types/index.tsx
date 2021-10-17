@@ -9,6 +9,7 @@ export interface State {
 
 export interface SiteInfoState {
   title: string;
+  isFavorites: boolean;
 }
 
 export interface TabsState {

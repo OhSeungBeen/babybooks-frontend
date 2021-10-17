@@ -4,6 +4,7 @@ import { ADMIN_PAGE_TITLE } from "../config/strings";
 const initialState: State = {
   siteInfo: {
     title: ADMIN_PAGE_TITLE,
+    isFavorites: false,
   },
   tabs: {
     index: 0,
