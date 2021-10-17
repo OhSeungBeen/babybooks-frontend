@@ -12,7 +12,7 @@ function TabBar(props: any) {
   const { app, tabs, dispatch } = props;
   const useStyles = makeStyles((theme: Theme) => ({
     navButton: {
-      margin:"auto 0px auto 2px",
+      margin: "auto 0px auto 2px",
       border: "1px solid",
       borderColor: theme.palette.primary.main,
       borderRadius: "10px",
@@ -29,7 +29,7 @@ function TabBar(props: any) {
 
   const classes = useStyles();
 
-    const setSideBar = () => {
+  const setSideBar = () => {
     app.sideBar.isShow = !app.sideBar.isShow;
     dispatch(AppAction.setSideBar(app.sideBar));
   };
