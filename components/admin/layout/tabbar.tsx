@@ -43,12 +43,16 @@ function TabBar(props: any) {
       label={
         <Box>
           <span>{tab.label}</span>
-          <a
-            className={classes.tabClose}
-            onClick={(event) => deleteTab(event, tab)}
-          >
-            <Close />
-          </a>
+          {tabs.items.length > 1 ? (
+            <a
+              className={classes.tabClose}
+              onClick={(event) => deleteTab(event, tab)}
+            >
+              <Close />
+            </a>
+          ) : (
+            ""
+          )}
         </Box>
       }
     />
