@@ -1,9 +1,10 @@
 import React from "react";
 
-import { Drawer, Box, Theme } from "@mui/material";
+import { Drawer, Box, Theme, IconButton } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { State } from "../../../types";
 import { connect } from "react-redux";
+import { Menu } from "@mui/icons-material";
 
 function SideBar(props: any) {
   const drawerWidth = "250px";
@@ -31,6 +32,12 @@ function SideBar(props: any) {
       borderStyle: "solid",
       borderColor: theme.palette.primary.main,
     },
+    navButton: {
+      left: drawerWidth,
+      border: "1px solid",
+      borderColor: theme.palette.primary.main,
+      borderRadius: "10px",
+    },
   }));
 
   const classes = useStyles();
@@ -47,6 +54,9 @@ function SideBar(props: any) {
       >
         <Box className={classes.drawContainor}>SIDEBAR</Box>
       </Drawer>
+      <IconButton className={classes.navButton}>
+        <Menu />
+      </IconButton>
     </nav>
   );
 }
