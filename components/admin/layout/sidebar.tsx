@@ -1,14 +1,12 @@
 import React from "react";
 
-import { Drawer, Box, Theme, IconButton } from "@mui/material";
+import { Drawer, Box, Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { State } from "../../../types";
 import { connect } from "react-redux";
-import { Menu } from "@mui/icons-material";
-import { AppAction } from "../../../redux/actions";
 
 function SideBar(props: any) {
-  const { app, dispatch } = props;
+  const { app } = props;
   const sideBarWidth = app.sideBar.isShow ? app.sideBar.width : "0px";
   const headerHeight = "64px";
   const footerHeight = "44px";
@@ -34,20 +32,10 @@ function SideBar(props: any) {
       borderStyle: "solid",
       borderColor: theme.palette.primary.main,
     },
-    navButton: {
-      left: `calc(${sideBarWidth} - 50px)`,
-      border: "1px solid",
-      borderColor: theme.palette.primary.main,
-      borderRadius: "10px",
-    },
+    
   }));
 
   const classes = useStyles();
-
-  const setSideBar = () => {
-    app.sideBar.isShow = !app.sideBar.isShow;
-    dispatch(AppAction.setSideBar(app.sideBar));
-  };
 
   return (
     <nav className={classes.nav}>
@@ -61,9 +49,6 @@ function SideBar(props: any) {
       >
         <Box className={classes.drawContainor}>SIDEBAR</Box>
       </Drawer>
-      <IconButton className={classes.navButton} onClick={setSideBar}>
-        <Menu />
-      </IconButton>
     </nav>
   );
 }
