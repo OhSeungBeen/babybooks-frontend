@@ -2,12 +2,13 @@
  * All Type
  */
 export interface State {
-  siteInfo: SiteInfoState;
+  app: AppState;
+  page: PageState;
   tabs: TabsState;
   navigator: string[];
 }
 
-export interface SiteInfoState {
+export interface PageState {
   title: string;
   isFavorites: boolean;
 }
@@ -20,4 +21,13 @@ export interface TabsState {
 export interface TabInfo {
   id: string;
   label: string;
+}
+
+export interface AppState {
+  sideBar: SideBarInfo;
+}
+
+export interface SideBarInfo {
+  width: string;
+  isShow: boolean;
 }

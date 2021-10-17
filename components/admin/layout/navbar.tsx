@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Star, StarBorder } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 
-import { SiteInfoAction } from "../../../redux/actions";
+import { PageAction } from "../../../redux/actions";
 
 function NavBar(props: any) {
   const { navigator, siteInfo, dispatch } = props;
@@ -20,7 +20,7 @@ function NavBar(props: any) {
   const classes = useStyles();
 
   const setFavorites = (event: React.SyntheticEvent) => {
-    dispatch(SiteInfoAction.setFavorites(!siteInfo.isFavorites));
+    dispatch(PageAction.setFavorites(!siteInfo.isFavorites));
   };
 
   const favorites = (

@@ -2,7 +2,13 @@ import { State } from "../types";
 import { ADMIN_PAGE_TITLE } from "../config/strings";
 
 const initialState: State = {
-  siteInfo: {
+  app: {
+    sideBar: {
+      width: "250px",
+      isShow: true,
+    },
+  },
+  page: {
     title: ADMIN_PAGE_TITLE,
     isFavorites: false,
   },

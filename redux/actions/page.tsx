@@ -1,17 +1,17 @@
 import { AnyAction } from "redux";
 import { ActionType } from ".";
-import { SiteInfoState } from "../../types";
+import { PageState } from "../../types";
 import initialState from "../defaultState";
 
 export function reducer(
-  state = initialState.siteInfo,
+  state = initialState.page,
   action: AnyAction
-): SiteInfoState {
+): PageState {
   switch (action.type) {
-    case ActionType.SITEINFO_AVAILABLE:
+    case ActionType.PAGE_AVAILABLE:
       const { siteInfo } = action;
-      return { ...initialState.siteInfo, ...siteInfo };
-    case ActionType.SITEINFO_SET_FAVORITES:
+      return { ...initialState.page, ...siteInfo };
+    case ActionType.PAGE_SET_FAVORITES:
       const { isFavorites } = action;
       return { ...state, isFavorites };
     default:
@@ -21,5 +21,5 @@ export function reducer(
 
 export function setFavorites(isFavorites: boolean): Function {
   return (dispatch: Function) =>
-    dispatch({ type: ActionType.SITEINFO_SET_FAVORITES, isFavorites });
+    dispatch({ type: ActionType.PAGE_SET_FAVORITES, isFavorites });
 }

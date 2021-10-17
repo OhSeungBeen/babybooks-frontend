@@ -5,7 +5,8 @@ import * as Actions from "./actions";
 import { State } from "../types";
 
 const appReducers = combineReducers<State>({
-  siteInfo: Actions.SiteInfoAction.reducer,
+  app: Actions.AppAction.reducer,
+  page: Actions.PageAction.reducer,
   tabs: Actions.TabsAction.reducer,
   navigator: Actions.NavigatorAction.reducer,
 });
