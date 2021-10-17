@@ -1,7 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import AdminLayout from "../../components/admin/layout";
 import { State } from "../../types";
+import dynamic from "next/dynamic";
+
+const AdminLayout = dynamic(() => import("../../components/admin/layout"));
 
 function AdminPage(props: any) {
   return (

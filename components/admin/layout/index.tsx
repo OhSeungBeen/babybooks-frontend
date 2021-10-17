@@ -3,12 +3,13 @@ import Head from "next/head";
 import { ADMIN_PAGE_TITLE } from "../../../config/strings";
 import { CssBaseline, ThemeProvider, Box } from "@mui/material";
 import { defaultTheme } from "../../../config/theme";
+import dynamic from "next/dynamic";
 
-import Header from "./header";
-import SideBar from "./sidebar";
-import Footer from "./footer";
-import TabBar from "./tabbar";
-import NavBar from "./navbar";
+const Header = dynamic(() => import("./header"));
+const SideBar = dynamic(() => import("./sidebar"));
+const Footer = dynamic(() => import("./footer"));
+const TabBar = dynamic(() => import("./tabbar"));
+const NavBar = dynamic(() => import("./navbar"));
 
 function AdminLayout(props: any) {
   const { children } = props;
