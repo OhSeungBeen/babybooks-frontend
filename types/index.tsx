@@ -4,6 +4,7 @@
 export interface State {
   siteInfo: SiteInfoState;
   tabs: TabsState;
+  navigator: string[];
 }
 
 export interface SiteInfoState {

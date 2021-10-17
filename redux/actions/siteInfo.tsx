@@ -1,10 +1,8 @@
 import { AnyAction } from "redux";
+import { ActionType } from ".";
 import { SiteInfoState } from "../../types";
 import initialState from "../defaultState";
 
-enum ActionType {
-  SITEINFO_AVAILABLE,
-}
 
 export function reducer(
   state = initialState.siteInfo,

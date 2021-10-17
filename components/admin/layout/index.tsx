@@ -8,6 +8,7 @@ import Header from "./header";
 import SideBar from "./sidebar";
 import Footer from "./footer";
 import TabBar from "./tabbar";
+import NavBar from "./navbar";
 
 function AdminLayout(props: any) {
   const { children } = props;
@@ -26,6 +27,7 @@ function AdminLayout(props: any) {
             <SideBar />
             <Box>
               <TabBar />
+              <NavBar />
               <main>{children}</main>
             </Box>
           </Box>

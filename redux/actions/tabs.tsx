@@ -1,12 +1,8 @@
 import { AnyAction } from "redux";
+import { ActionType } from ".";
 import { TabInfo, TabsState } from "../../types";
 import initialState from "../defaultState";
 
-enum ActionType {
-  TAB_CHANGE,
-  TAB_ADD,
-  TAB_DELETE,
-}
 
 export function reducer(
   state = initialState.tabs,
