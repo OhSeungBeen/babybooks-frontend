@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { ADMIN_MANAGE_ACCOUNT, LOGOUT } from "../../../config/strings";
 
 function Header(props: any) {
-  const { siteInfo } = props;
+  const { page } = props;
   const useStyles = makeStyles((theme: Theme) => ({
     header: {
       fontSize: "20pt",
@@ -31,7 +31,7 @@ function Header(props: any) {
     <AppBar position="relative">
       <Toolbar className={classes.header}>
         <Box className={classes.logo}>📔</Box>
-        <Box className={classes.title}>{siteInfo.title}</Box>
+        <Box className={classes.title}>{page.title}</Box>
         <Box className={classes.space} />
         <Box>Account</Box>
         <Box className={classes.separator} />
