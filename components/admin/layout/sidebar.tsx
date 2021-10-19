@@ -23,7 +23,8 @@ function SideBar(props: any) {
         flexShrink: 0,
       },
     },
-    navButton: {
+    expandButton: {
+      width: "100%",
       border: "1px solid",
       borderColor: theme.palette.primary.main,
       borderRadius: "10px",
@@ -63,10 +64,12 @@ function SideBar(props: any) {
           paper: classes.drawerPaper,
         }}
       >
-        <IconButton className={classes.navButton} onClick={setSideBar}>
-          <Expand sx={{ transform: "rotate(90deg)" }} />
-        </IconButton>
-        <Box className={classes.drawContainor}>SIDEBAR</Box>
+        <Box className={classes.drawContainor}>
+          <IconButton className={classes.expandButton} onClick={setSideBar}>
+            <Expand sx={{ transform: "rotate(90deg)" }} />
+          </IconButton>
+          SIDEBAR
+        </Box>
       </Drawer>
     </nav>
   );
