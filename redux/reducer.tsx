@@ -8,6 +8,7 @@ const appReducers = combineReducers<State>({
   app: Actions.AppAction.reducer,
   page: Actions.PageAction.reducer,
   tabs: Actions.TabsAction.reducer,
+  dialog: Actions.DialogAction.reducer,
 });
 
 export default function reducer(

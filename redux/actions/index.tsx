@@ -1,6 +1,7 @@
 export * as AppAction from "./app";
 export * as PageAction from "./page";
 export * as TabsAction from "./tabs";
+export * as DialogAction from "./dialog";
 
 export enum ActionType {
   APP_SHOW_SIDEBAR,
@@ -11,4 +12,5 @@ export enum ActionType {
   TAB_DELETE,
   NAVIGATOR_PUSH,
   NAVIGATOR_POP,
+  DIALOG_OPEN,
 }

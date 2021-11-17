@@ -17,6 +17,7 @@ const initialState: State = {
     index: 0,
     items: [],
   },
+  dialog: {},
 };
 
 export default initialState;

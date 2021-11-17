@@ -5,6 +5,7 @@ export interface State {
   app: AppState;
   page: PageState;
   tabs: TabsState;
+  dialog: DialogState;
 }
 
 export interface PageState {
@@ -30,4 +31,10 @@ export interface AppState {
 export interface SideBarInfo {
   width: string;
   isShow: boolean;
+}
+
+export interface DialogState {
+  [id: string]: {
+    isOpen: boolean;
+  };
 }
