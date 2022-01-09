@@ -1,15 +1,17 @@
-import React from "react";
-import { Box, Button, Tab, Tabs, Theme } from "@mui/material";
 import { Close } from "@mui/icons-material";
-import { State, TabInfo } from "../../types";
+import { Box, Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { connect } from "react-redux";
-import { TabsAction } from "../../redux/actions";
+import React, { ReactElement } from "react";
+import { connectState } from "redux/store";
+import { ComponentProps } from "types";
 
-function Dialog(props: any) {
-  const { isOpen, dispatch } = props;
+interface DialogProps extends ComponentProps {
+  isOpen: boolean;
+}
 
-  console.log(`isOpen: ${isOpen}`);
+const Dialog = (props: DialogProps): ReactElement => {
+  const { state, dispatch, children } = props;
+
   const useStyles = makeStyles((theme: Theme) => ({
     dialog: {
       width: "100%",
@@ -25,21 +27,9 @@ function Dialog(props: any) {
       <Box>
         <Close />
       </Box>
-      <Box>Contents</Box>
+      <Box>{children}</Box>
     </Box>
   );
-}
+};
 
-function mapStateToProps(state: State) {
-  return {
-    ...state,
-  };
-}
-
-function mapDispatchToProps(dispatch: Function) {
-  return {
-    dispatch,
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Dialog);
+export default connectState(Dialog);

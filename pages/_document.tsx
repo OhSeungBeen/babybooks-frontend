@@ -1,17 +1,15 @@
 /**
  * SSR 하는 과정에 오류 발생으로 추가
  */
-
-import React from "react";
-import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheets } from "@mui/styles";
+import Document, { Html, Head, Main, NextScript } from "next/document";
+import React from "react";
 
 export default class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head>
-        </Head>
+        <Head></Head>
         <body>
           <Main />
           <NextScript />

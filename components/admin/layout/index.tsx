@@ -1,9 +1,11 @@
-import React from "react";
-import Head from "next/head";
-import { ADMIN_PAGE_TITLE } from "../../../config/strings";
 import { CssBaseline, ThemeProvider, Box } from "@mui/material";
-import { defaultTheme } from "../../../config/theme";
+import { ADMIN_PAGE_TITLE } from "config/strings";
+import { defaultTheme } from "config/theme";
 import dynamic from "next/dynamic";
+import Head from "next/head";
+import React, { ReactElement } from "react";
+import { connectState } from "redux/store";
+import { ComponentProps } from "types";
 
 const Header = dynamic(() => import("./header"));
 const SideBar = dynamic(() => import("./sidebar"));
@@ -11,7 +13,7 @@ const Footer = dynamic(() => import("./footer"));
 const TabBar = dynamic(() => import("./tabbar"));
 const Breadcrumb = dynamic(() => import("./breadcrumb"));
 
-function AdminLayout(props: any) {
+function AdminLayout(props: ComponentProps): ReactElement {
   const { children } = props;
   return (
     <>
@@ -39,4 +41,4 @@ function AdminLayout(props: any) {
   );
 }
 
-export default AdminLayout;
+export default connectState(AdminLayout);

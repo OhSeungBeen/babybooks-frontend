@@ -1,10 +1,10 @@
-import React from "react";
 import { Box, Theme } from "@mui/material";
-import { State } from "../../../types";
 import { makeStyles } from "@mui/styles";
-import { connect } from "react-redux";
+import React, { ReactElement } from "react";
+import { connectState } from "redux/store";
+import { ComponentProps } from "types";
 
-function Footer(props: any) {
+function Footer(props: ComponentProps): ReactElement {
   const useStyles = makeStyles((theme: Theme) => ({
     footer: {
       width: "100%",
@@ -27,10 +27,4 @@ function Footer(props: any) {
   );
 }
 
-function mapStateToProps(state: State) {
-  return {
-    ...state,
-  };
-}
-
-export default connect(mapStateToProps)(Footer);
+export default connectState(Footer);

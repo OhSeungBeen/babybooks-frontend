@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import App, { AppContext, AppInitialProps, AppProps } from "next/app";
-import { Provider, useStore } from "react-redux";
 import { ThemeProvider } from "@mui/private-theming";
-import { defaultTheme } from "../config/theme";
-import { wrapper } from "../redux/store";
+import { defaultTheme } from "config/theme";
+import App, { AppContext, AppInitialProps, AppProps } from "next/app";
+import React, { useEffect } from "react";
+import { Provider, useStore } from "react-redux";
+import { wrapper } from "redux/store";
 
 function WrappedApp({ Component, pageProps }: AppProps) {
   const store = useStore();
 
-   useEffect(() => {
+  useEffect(() => {
     removeServerSideInjectedCSS();
   }, []);
 

@@ -1,15 +1,14 @@
-import React from "react";
-import { Box, Button, Theme } from "@mui/material";
-import { State } from "../../../types";
-import { connect } from "react-redux";
 import { Star, StarBorder } from "@mui/icons-material";
+import { Box, Button, Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import React, { ReactElement } from "react";
+import { PageAction } from "redux/actions";
+import { connectState } from "redux/store";
+import { ComponentProps } from "types";
 
-import { PageAction } from "../../../redux/actions";
-
-function Breadcrumb(props: any) {
-  const { page, dispatch } = props;
-  const text = page.breadcrumb.join(" > ");
+function Breadcrumb(props: ComponentProps): ReactElement {
+  const { state, dispatch } = props;
+  const text = state.page.breadcrumb.join(" > ");
 
   const useStyles = makeStyles((theme: Theme) => ({
     favorites: {
@@ -20,12 +19,12 @@ function Breadcrumb(props: any) {
   const classes = useStyles();
 
   const setFavorites = (event: React.SyntheticEvent) => {
-    dispatch(PageAction.setFavorites(!page.isFavorites));
+    dispatch(PageAction.setFavorites(!state.page.isFavorites));
   };
 
   const favorites = (
     <Button className={classes.favorites} onClick={setFavorites}>
-      {page.isFavorites ? <Star /> : <StarBorder />}
+      {state.page.isFavorites ? <Star /> : <StarBorder />}
       즐겨찾기
     </Button>
   );
@@ -38,16 +37,4 @@ function Breadcrumb(props: any) {
   );
 }
 
-function mapStateToProps(state: State) {
-  return {
-    ...state,
-  };
-}
-
-function mapDispatchToProps(dispatch: Function) {
-  return {
-    dispatch,
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Breadcrumb);
+export default connectState(Breadcrumb);

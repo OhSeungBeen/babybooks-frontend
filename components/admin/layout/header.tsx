@@ -1,13 +1,12 @@
-import React from "react";
 import { AppBar, Box, Theme, Toolbar } from "@mui/material";
-import { State } from "../../../types";
 import { makeStyles } from "@mui/styles";
-import { connect } from "react-redux";
+import { ADMIN_MANAGE_ACCOUNT, LOGOUT } from "config/strings";
+import React, { ReactElement } from "react";
+import { connectState } from "redux/store";
+import { ComponentProps } from "types";
 
-import { ADMIN_MANAGE_ACCOUNT, LOGOUT } from "../../../config/strings";
-
-function Header(props: any) {
-  const { page } = props;
+function Header(props: ComponentProps): ReactElement {
+  const { state } = props;
   const useStyles = makeStyles((theme: Theme) => ({
     header: {
       fontSize: "20pt",
@@ -31,7 +30,7 @@ function Header(props: any) {
     <AppBar position="relative">
       <Toolbar className={classes.header}>
         <Box className={classes.logo}>📔</Box>
-        <Box className={classes.title}>{page.title}</Box>
+        <Box className={classes.title}>{state.page.title}</Box>
         <Box className={classes.space} />
         <Box>Account</Box>
         <Box className={classes.separator} />
@@ -43,10 +42,4 @@ function Header(props: any) {
   );
 }
 
-function mapStateToProps(state: State) {
-  return {
-    ...state,
-  };
-}
-
-export default connect(mapStateToProps)(Header);
+export default connectState(Header);

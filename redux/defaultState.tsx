@@ -1,5 +1,5 @@
-import { State } from "../types";
-import { ADMIN_PAGE_TITLE } from "../config/strings";
+import { ADMIN_PAGE_TITLE } from "config/strings";
+import { State } from "types";
 
 const initialState: State = {
   app: {

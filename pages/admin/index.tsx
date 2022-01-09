@@ -1,14 +1,14 @@
-import React from "react";
-import { connect } from "react-redux";
-import { State } from "../../types";
+import Dialog from "components/admin/dialog";
 import dynamic from "next/dynamic";
-import Dialog from "../../components/admin/dialog";
-import { DialogAction } from "../../redux/actions";
+import React from "react";
+import { DialogAction } from "redux/actions";
+import { connectState } from "redux/store";
+import { State, ComponentProps } from "types";
 
-const AdminLayout = dynamic(() => import("../../components/admin/layout"));
+const AdminLayout = dynamic(() => import("components/admin/layout"));
 
-function AdminPage(props: any) {
-  const { dialog, dispatch } = props;
+function AdminPage(props: ComponentProps) {
+  const { state, dispatch } = props;
 
   const DialogOpen = (event: React.SyntheticEvent) => {
     dispatch(DialogAction.open("default"));
@@ -18,7 +18,9 @@ function AdminPage(props: any) {
     <AdminLayout>
       <>Admin page</>
       <a onClick={DialogOpen}>Dialog</a>
-      <Dialog isOpen={dialog.default.isOpen} />
+      {state.dialog.default ? (
+        <Dialog isOpen={state.dialog.default.isOpen} />
+      ) : null}
     </AdminLayout>
   );
 }
@@ -29,4 +31,4 @@ function mapStateToProps(state: State) {
   };
 }
 
-export default connect(mapStateToProps)(AdminPage);
+export default connectState(AdminPage);

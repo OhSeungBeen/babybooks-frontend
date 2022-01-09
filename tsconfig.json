@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "target": "es5",
     "lib": [
       "es6",
@@ -19,7 +20,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "noImplicitAny": true,
-    "noImplicitThis": true
+    "noImplicitThis": true,
+    "incremental": true
   },
   "include": [
     "next-env.d.ts",

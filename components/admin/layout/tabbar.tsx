@@ -1,15 +1,15 @@
-import React from "react";
-import { Box, Button, Tab, Tabs, Theme } from "@mui/material";
 import { Close } from "@mui/icons-material";
-import { State, TabInfo } from "../../../types";
+import { Box, Button, Tab, Tabs, Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { connect } from "react-redux";
-import { TabsAction } from "../../../redux/actions";
+import React, { ReactElement } from "react";
+import { TabsAction } from "redux/actions";
+import { connectState } from "redux/store";
+import { ComponentProps, TabInfo } from "types";
 
 let tabId = 0;
 
-function TabBar(props: any) {
-  const { app, tabs, dispatch } = props;
+function TabBar(props: ComponentProps): ReactElement {
+  const { state, dispatch } = props;
   const useStyles = makeStyles((theme: Theme) => ({
     tabBar: {
       width: "100%",
@@ -36,13 +36,13 @@ function TabBar(props: any) {
     dispatch(TabsAction.deleteTab(tab.id));
   };
 
-  const tabItems = tabs.items.map((tab: TabInfo) => (
+  const tabItems = state.tabs.items.map((tab: TabInfo) => (
     <Tab
       key={tab.id}
       label={
         <Box>
           <span>{tab.label}</span>
-          {tabs.items.length > 1 ? (
+          {state.tabs.items.length > 1 ? (
             <a
               className={classes.tabClose}
               onClick={(event) => deleteTab(event, tab)}
@@ -60,7 +60,7 @@ function TabBar(props: any) {
   return (
     <Box className={classes.tabBar}>
       <Tabs
-        value={tabs.index}
+        value={state.tabs.index}
         onChange={handleChange}
         variant="scrollable"
         scrollButtons="auto"
@@ -72,16 +72,4 @@ function TabBar(props: any) {
   );
 }
 
-function mapStateToProps(state: State) {
-  return {
-    ...state,
-  };
-}
-
-function mapDispatchToProps(dispatch: Function) {
-  return {
-    dispatch,
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TabBar);
+export default connectState(TabBar);
