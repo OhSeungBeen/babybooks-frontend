@@ -1,8 +1,8 @@
-import { combineReducers, AnyAction } from 'redux';
-import { HYDRATE } from 'next-redux-wrapper';
-import initialState from './defaultState';
-import * as Actions from './actions';
-import { State } from '../types';
+import * as Actions from "./actions";
+import initialState from "./defaultState";
+import { HYDRATE } from "next-redux-wrapper";
+import { combineReducers } from "redux";
+import { Action, State } from "types";
 
 const appReducers = combineReducers<State>({
   app: Actions.AppAction.reducer,
@@ -11,10 +11,7 @@ const appReducers = combineReducers<State>({
   dialog: Actions.DialogAction.reducer,
 });
 
-export default function reducer(
-  state: State = initialState,
-  action: AnyAction
-) {
+export default function reducer(state: State = initialState, action: Action) {
   if (action.type === HYDRATE) {
     const nextState = {
       ...state,

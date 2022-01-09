@@ -1,29 +1,30 @@
-import React from 'react';
-import { AppBar, Box, Theme, Toolbar } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import { connect } from 'react-redux';
-import { State } from '../../../types';
-import { ADMIN_MANAGE_ACCOUNT, LOGOUT } from '../../../config/strings';
+import { AppBar, Box, Theme, Toolbar } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import { ADMIN_MANAGE_ACCOUNT, LOGOUT } from "config/strings";
+import React, { ReactElement } from "react";
+import { connectState } from "redux/store";
+import { ComponentProps } from "types";
+
 // import PlainLink from '../../common/plainLink';
 
-function Header(props: any) {
-  const { page } = props;
+function Header(props: ComponentProps): ReactElement {
+  const { state } = props;
   const useStyles = makeStyles((theme: Theme) => ({
     appBar: {
-      height: '100%',
+      height: "100%",
     },
     toolBar: {
-      fontSize: '20pt',
+      fontSize: "20pt",
     },
     logo: {},
     title: {},
     space: { flexGrow: 1 },
     separator: {
-      width: '1px',
-      height: '0.8em',
-      marginLeft: '10px',
-      marginRight: '10px',
-      borderLeft: '1px solid',
+      width: "1px",
+      height: "0.8em",
+      marginLeft: "10px",
+      marginRight: "10px",
+      borderLeft: "1px solid",
       borderColor: theme.palette.secondary.main,
     },
   }));
@@ -35,7 +36,7 @@ function Header(props: any) {
       <Toolbar className={classes.toolBar}>
         {/* <Box className={classes.logo}>📔</Box>
         <PlainLink href="/admin">
-          <Box className={classes.title}>{page.title}</Box>
+          <Box className={classes.title}>{state.page.title}</Box>
         </PlainLink>
 
         <Box className={classes.space} />
@@ -49,10 +50,4 @@ function Header(props: any) {
   );
 }
 
-function mapStateToProps(state: State) {
-  return {
-    ...state,
-  };
-}
-
-export default connect(mapStateToProps)(Header);
+export default connectState(Header);

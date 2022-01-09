@@ -1,19 +1,17 @@
-import { AnyAction } from 'redux';
-import { ActionType } from '.';
-import { AppState, SideBarInfo } from '../../types';
-import initialState from '../defaultState';
+import { ActionType } from ".";
+import initialState from "redux/defaultState";
+import { Action, AppState, SideBarInfo } from "types";
 
-export function reducer(state = initialState.app, action: AnyAction): AppState {
+export function reducer(state = initialState.app, action: Action): AppState {
   switch (action.type) {
     case ActionType.APP_SHOW_SIDEBAR:
-      const { sideBar } = action;
+      const { payload: sideBar } = action;
       return { ...state, sideBar: { ...sideBar } };
     default:
       return state;
   }
 }
 
-export function setSideBar(sideBar: SideBarInfo): Function {
-  return (dispatch: Function) =>
-    dispatch({ type: ActionType.APP_SHOW_SIDEBAR, sideBar });
+export function setSideBar(sideBar: SideBarInfo): Action {
+  return { type: ActionType.PAGE_SET_FAVORITES, payload: sideBar };
 }

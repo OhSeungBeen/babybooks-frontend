@@ -1,21 +1,21 @@
-import React from 'react';
-import { Box, Theme } from '@mui/material';
-import { State } from '../../../types';
-import { makeStyles } from '@mui/styles';
-import { connect } from 'react-redux';
+import { Box, Theme } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import React, { ReactElement } from "react";
+import { connectState } from "redux/store";
+import { ComponentProps } from "types";
 
-function Footer(props: any) {
+function Footer(props: ComponentProps): ReactElement {
   const useStyles = makeStyles((theme: Theme) => ({
     footer: {
-      width: '100%',
-      position: 'fixed',
+      width: "100%",
+      position: "fixed",
       background: theme.palette.secondary.main,
-      bottom: '0px',
-      textAlign: 'right',
-      padding: '10px',
+      bottom: "0px",
+      textAlign: "right",
+      padding: "10px",
       zIndex: 1,
-      fontSize: '10pt',
-      height: '40px',
+      fontSize: "10pt",
+      height: "40px",
     },
   }));
 
@@ -28,10 +28,4 @@ function Footer(props: any) {
   );
 }
 
-function mapStateToProps(state: State) {
-  return {
-    ...state,
-  };
-}
-
-export default connect(mapStateToProps)(Footer);
+export default connectState(Footer);

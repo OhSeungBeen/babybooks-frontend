@@ -1,20 +1,30 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { GetServerSideProps } from 'next';
-import { resetServerContext } from 'react-beautiful-dnd';
-import { State } from '../../types';
-import AdminLayout from '../../components/admin/layout';
+import Dialog from "components/admin/dialog";
+import { GetServerSideProps } from "next";
+import dynamic from "next/dynamic";
+import React from "react";
+import { resetServerContext } from "react-beautiful-dnd";
+import { DialogAction } from "redux/actions";
+import { connectState } from "redux/store";
+import { ComponentProps } from "types";
 
-function AdminPage(props: any) {
-  const { dialog, dispatch } = props;
+const AdminLayout = dynamic(() => import("components/admin/layout"));
 
-  return <div>Admin page</div>;
-}
+function AdminPage(props: ComponentProps) {
+  const { state, dispatch } = props;
 
-function mapStateToProps(state: State) {
-  return {
-    ...state,
+  const DialogOpen = (event: React.SyntheticEvent) => {
+    dispatch(DialogAction.open("default"));
   };
+
+  return (
+    <AdminLayout>
+      <>Admin page</>
+      <a onClick={DialogOpen}>Dialog</a>
+      {state.dialog.default ? (
+        <Dialog isOpen={state.dialog.default.isOpen} />
+      ) : null}
+    </AdminLayout>
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -23,4 +33,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 AdminPage.layout = AdminLayout;
-export default connect(mapStateToProps)(AdminPage);
+
+export default connectState(AdminPage);

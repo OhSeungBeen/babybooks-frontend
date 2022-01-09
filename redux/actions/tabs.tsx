@@ -1,19 +1,15 @@
-import { AnyAction } from 'redux';
-import { ActionType } from '.';
-import { TabInfo, TabsState } from '../../types';
-import initialState from '../defaultState';
+import { ActionType } from ".";
+import initialState from "redux/defaultState";
+import { Action, TabInfo, TabsState } from "types";
 
-export function reducer(
-  state = initialState.tabs,
-  action: AnyAction
-): TabsState {
+export function reducer(state = initialState.tabs, action: Action): TabsState {
   switch (action.type) {
     case ActionType.TAB_CHANGE: {
-      const { index } = action;
+      const { payload: index } = action;
       return { ...state, index };
     }
     case ActionType.TAB_ADD: {
-      const { tab } = action;
+      const { payload: tab } = action;
       return {
         ...state,
         items: [...state.items, tab],
@@ -21,7 +17,7 @@ export function reducer(
       };
     }
     case ActionType.TAB_DELETE: {
-      const { id } = action;
+      const { payload: id } = action;
       let { index } = state;
 
       const delIndex = state.items.findIndex((tab) => tab.id === id);
@@ -38,15 +34,14 @@ export function reducer(
   }
 }
 
-export function changeTab(index: number): Function {
-  return (dispatch: Function) =>
-    dispatch({ type: ActionType.TAB_CHANGE, index });
+export function changeTab(index: number): Action {
+  return { type: ActionType.TAB_CHANGE, payload: index };
 }
 
-export function addTab(tab: TabInfo): Function {
-  return (dispatch: Function) => dispatch({ type: ActionType.TAB_ADD, tab });
+export function addTab(tab: TabInfo): Action {
+  return { type: ActionType.TAB_ADD, payload: tab };
 }
 
-export function deleteTab(id: string): Function {
-  return (dispatch: Function) => dispatch({ type: ActionType.TAB_DELETE, id });
+export function deleteTab(id: string): Action {
+  return { type: ActionType.TAB_DELETE, payload: id };
 }

@@ -1,9 +1,10 @@
-import { createStore, applyMiddleware, Store } from 'redux';
-import { createWrapper, Context } from 'next-redux-wrapper';
-import thunk from 'redux-thunk';
-import reducer from './reducer';
-import { State } from '../types';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import reducer from "./reducer";
+import { createWrapper, Context } from "next-redux-wrapper";
+import { connect } from "react-redux";
+import { createStore, applyMiddleware, Store } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
+import { State } from "types";
 
 const makeStore = (context: Context) => {
   const store = createStore(
@@ -12,5 +13,9 @@ const makeStore = (context: Context) => {
   );
   return store;
 };
+
+export const connectState = connect((state: State) => ({
+  state,
+}));
 
 export const wrapper = createWrapper<Store<State>>(makeStore, { debug: true });

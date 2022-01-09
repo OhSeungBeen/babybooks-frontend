@@ -1,23 +1,24 @@
-import { AnyAction } from "redux";
 import { ActionType } from ".";
-import { DialogState } from "../../types";
-import initialState from "../defaultState";
+import initialState from "redux/defaultState";
+import { Action, DialogState } from "types";
 
 export function reducer(
   state = initialState.dialog,
-  action: AnyAction
+  action: Action
 ): DialogState {
   switch (action.type) {
-    case ActionType.DIALOG_OPEN:
-      const dialog = state[action.payload.id] || { isOpen: true };
+    case ActionType.DIALOG_OPEN: {
+      const { payload: id } = action;
+      const dialog = state[id] || { isOpen: true };
       dialog.isOpen = true;
-      state[action.payload.id] = dialog;
+      state[id] = dialog;
       return state;
+    }
     default:
       return state;
   }
 }
 
-export function open(id: string): Function {
-  return (dispatch: Function) => dispatch({ type: ActionType.DIALOG_OPEN, id });
+export function open(id: string): Action {
+  return { type: ActionType.DIALOG_OPEN, payload: id };
 }

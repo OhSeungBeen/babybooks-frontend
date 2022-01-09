@@ -1,22 +1,22 @@
-import { State } from '../types';
-import { ADMIN_PAGE_TITLE } from '../config/strings';
+import { ADMIN_PAGE_TITLE } from "config/strings";
+import { State } from "types";
 
 const initialState: State = {
   app: {
     sideBar: {
-      width: '250px',
+      width: "250px",
       isShow: true,
     },
     header: {
-      height: '64px',
+      height: "64px",
     },
     footer: {
-      height: '40px',
+      height: "40px",
     },
   },
   page: {
     title: ADMIN_PAGE_TITLE,
-    breadcrumb: ['First', 'Second'],
+    breadcrumb: ["First", "Second"],
     isFavorites: false,
   },
   tabs: {
