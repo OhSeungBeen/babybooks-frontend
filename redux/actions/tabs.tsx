@@ -1,7 +1,7 @@
-import { AnyAction } from "redux";
-import { ActionType } from ".";
-import { TabInfo, TabsState } from "../../types";
-import initialState from "../defaultState";
+import { AnyAction } from 'redux';
+import { ActionType } from '.';
+import { TabInfo, TabsState } from '../../types';
+import initialState from '../defaultState';
 
 export function reducer(
   state = initialState.tabs,
@@ -14,8 +14,11 @@ export function reducer(
     }
     case ActionType.TAB_ADD: {
       const { tab } = action;
-      state.items.push(tab);
-      return { ...state };
+      return {
+        ...state,
+        items: [...state.items, tab],
+        index: state.items.length,
+      };
     }
     case ActionType.TAB_DELETE: {
       const { id } = action;

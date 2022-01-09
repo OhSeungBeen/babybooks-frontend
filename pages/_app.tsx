@@ -1,19 +1,35 @@
-import React, { useEffect } from "react";
-import App, { AppContext, AppInitialProps, AppProps } from "next/app";
-import { Provider, useStore } from "react-redux";
-import { ThemeProvider } from "@mui/private-theming";
-import { defaultTheme } from "../config/theme";
-import { wrapper } from "../redux/store";
+import React, { useEffect } from 'react';
+import App, { AppContext, AppInitialProps, AppProps } from 'next/app';
+import { NextPage } from 'next';
+import { Provider, useStore } from 'react-redux';
+import { ThemeProvider } from '@mui/private-theming';
+import { defaultTheme } from '../config/theme';
+import { wrapper } from '../redux/store';
 
-function WrappedApp({ Component, pageProps }: AppProps) {
+export type NextPageWithLayout = NextPage & {
+  layout?: () => JSX.Element;
+};
+
+export type WrappedAppProps = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+export interface NoneLayoutProps {
+  children: React.ReactNode;
+}
+
+function WrappedApp({ Component, pageProps }: WrappedAppProps) {
+  const Layout =
+    Component.layout || (({ children }: NoneLayoutProps) => <>{children}</>);
+
   const store = useStore();
 
-   useEffect(() => {
+  useEffect(() => {
     removeServerSideInjectedCSS();
   }, []);
 
   const removeServerSideInjectedCSS = () => {
-    const jssStyles = document.querySelector("#jss-server-side");
+    const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
@@ -22,7 +38,11 @@ function WrappedApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <ThemeProvider theme={defaultTheme}>
-        <Component {...pageProps} />
+        <>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </>
       </ThemeProvider>
     </Provider>
   );

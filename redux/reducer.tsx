@@ -1,8 +1,8 @@
-import { combineReducers, AnyAction } from "redux";
-import { HYDRATE } from "next-redux-wrapper";
-import initialState from "./defaultState";
-import * as Actions from "./actions";
-import { State } from "../types";
+import { combineReducers, AnyAction } from 'redux';
+import { HYDRATE } from 'next-redux-wrapper';
+import initialState from './defaultState';
+import * as Actions from './actions';
+import { State } from '../types';
 
 const appReducers = combineReducers<State>({
   app: Actions.AppAction.reducer,
@@ -24,3 +24,5 @@ export default function reducer(
   }
   return appReducers(state, action);
 }
+
+// export type State = ReturnType<typeof appReducers>;
