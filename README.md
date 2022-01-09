@@ -13,6 +13,6 @@ UI: `MUI`
 `https://berry-free-react-admin-template-git-v20-codedthemes.vercel.app/`
 
 Convention:
-import:
 
-- use absolute path. exclude(., ./\*)
+- import:
+  - use absolute path. exclude(., ./\*)
