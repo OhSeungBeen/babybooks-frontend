@@ -1,34 +1,33 @@
-import { AppBar, Box, Theme, Toolbar } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import { ADMIN_MANAGE_ACCOUNT, LOGOUT } from "config/strings";
-import React, { ReactElement } from "react";
-import { connectState } from "redux/store";
-import { ComponentProps } from "types";
+import { AppBar, Box, Theme, Toolbar } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { ADMIN_MANAGE_ACCOUNT, LOGOUT } from 'config/strings';
+import React, { ReactElement } from 'react';
+import { connectState } from 'redux/store';
+import { ComponentProps } from 'types';
 
 // import PlainLink from '../../common/plainLink';
 
-function Header(props: ComponentProps): ReactElement {
-  const { state } = props;
-  const useStyles = makeStyles((theme: Theme) => ({
-    appBar: {
-      height: "100%",
-    },
-    toolBar: {
-      fontSize: "20pt",
-    },
-    logo: {},
-    title: {},
-    space: { flexGrow: 1 },
-    separator: {
-      width: "1px",
-      height: "0.8em",
-      marginLeft: "10px",
-      marginRight: "10px",
-      borderLeft: "1px solid",
-      borderColor: theme.palette.secondary.main,
-    },
-  }));
+const useStyles = makeStyles((theme: Theme) => ({
+  appBar: {
+    height: '100%',
+  },
+  toolBar: {
+    fontSize: '20pt',
+  },
+  logo: {},
+  title: {},
+  space: { flexGrow: 1 },
+  separator: {
+    width: '1px',
+    height: '0.8em',
+    marginLeft: '10px',
+    marginRight: '10px',
+    borderLeft: '1px solid',
+    borderColor: theme.palette.secondary.main,
+  },
+}));
 
+const Header: React.FC<ComponentProps> = ({}) => {
   const classes = useStyles();
 
   return (
@@ -48,6 +47,6 @@ function Header(props: ComponentProps): ReactElement {
       </Toolbar>
     </AppBar>
   );
-}
+};
 
 export default connectState(Header);

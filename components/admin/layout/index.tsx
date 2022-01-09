@@ -4,33 +4,32 @@ import {
   Theme,
   Box,
   Container,
-} from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import { ADMIN_PAGE_TITLE } from "config/strings";
-import { defaultTheme } from "config/theme";
-import dynamic from "next/dynamic";
-import Head from "next/head";
-import React, { ReactElement } from "react";
-import { useSelector } from "react-redux";
-import { connectState } from "redux/store";
-import { SideBarInfo, State, ComponentProps } from "types";
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { ADMIN_PAGE_TITLE } from 'config/strings';
+import { defaultTheme } from 'config/theme';
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
+import React from 'react';
+import { connectState } from 'redux/store';
+import { SideBarInfo, ComponentProps } from 'types';
 
-const Header = dynamic(() => import("./header"));
-const SideBar = dynamic(() => import("./sidebar"));
-const Footer = dynamic(() => import("./footer"));
-const TabBar = dynamic(() => import("./tabbar"));
-const Navigation = dynamic(() => import("./navigation"));
+const Header = dynamic(() => import('./header'));
+const SideBar = dynamic(() => import('./sidebar'));
+const Footer = dynamic(() => import('./footer'));
+const TabBar = dynamic(() => import('./tabbar'));
+const Navigation = dynamic(() => import('./navigation'));
 
-export interface StyleProps {
-  sidebar: SideBarInfo;
+interface StyleProps {
+  sideBar: SideBarInfo;
   headerHeight: string;
   footerHeight: string;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
-    height: "100vh",
-    overflow: "hidden",
+    height: '100vh',
+    overflow: 'hidden',
   },
   header: {
     height: (props: StyleProps) => props.headerHeight,
@@ -40,35 +39,31 @@ const useStyles = makeStyles((theme: Theme) => ({
       `calc(100% - ${props.headerHeight} - ${props.footerHeight})`,
     maxHeight: (props: StyleProps) =>
       `calc(100% - ${props.headerHeight} - ${props.footerHeight})`,
-    display: "flex",
+    display: 'flex',
   },
   sidebar: {
     width: (props: StyleProps) =>
-      props.sidebar.isShow ? props.sidebar.width : "0px",
-    transition: "width 200ms cubic-bezier(0.4, 0, 0.6, 1) 0ms",
+      props.sideBar.isShow ? props.sideBar.width : '0px',
+    transition: 'width 200ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
     border: `1px solid ${theme.palette.primary.main}`,
-    boxSizing: "border-box",
+    boxSizing: 'border-box',
   },
   content: {
     width: (props: StyleProps) =>
-      props.sidebar.isShow ? `calc(100vw - ${props.sidebar.width})` : "100vw",
-    overflowX: "hidden",
-    overflowY: "auto",
+      props.sideBar.isShow ? `calc(100vw - ${props.sideBar.width})` : '100vw',
+    overflowX: 'hidden',
+    overflowY: 'auto',
   },
   footer: {
-    height: "40px",
+    height: '40px',
   },
 }));
 
-function AdminLayout(props: ComponentProps): ReactElement {
-  const { children } = props;
-
-  const sidebar = useSelector((state: State) => state.app.sideBar);
-  const header = useSelector((state: State) => state.app.header);
-  const footer = useSelector((state: State) => state.app.footer);
+const AdminLayout: React.FC<ComponentProps> = ({ state, children }) => {
+  const { sideBar, header, footer } = state.app;
 
   const classes = useStyles({
-    sidebar,
+    sideBar,
     headerHeight: header.height,
     footerHeight: footer.height,
   });
@@ -96,7 +91,7 @@ function AdminLayout(props: ComponentProps): ReactElement {
               <Navigation />
               <Container
                 fixed
-                sx={{ border: "3px solid red", minWidth: "950px" }}
+                sx={{ border: '3px solid red', minWidth: '950px' }}
               >
                 {children}
               </Container>
@@ -110,6 +105,6 @@ function AdminLayout(props: ComponentProps): ReactElement {
       </ThemeProvider>
     </>
   );
-}
+};
 
 export default connectState(AdminLayout);

@@ -1,6 +1,6 @@
-import { Dispatch, ReactNode } from "react";
-import { AnyAction } from "redux";
-import { ActionType } from "redux/actions";
+import { Dispatch, ReactNode } from 'react';
+import { AnyAction } from 'redux';
+import { ActionType } from 'redux/actions';
 
 /**
  * All Type
@@ -15,7 +15,7 @@ export interface State {
 export interface ComponentProps {
   children?: ReactNode;
   state?: State;
-  dispatch: Dispatch<any>;
+  dispatch: Dispatch<Action>;
 }
 
 export interface PageState {
