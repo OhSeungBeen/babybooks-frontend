@@ -1,12 +1,12 @@
-import { createTheme, Theme } from "@mui/material";
-import { grey, red } from "@mui/material/colors";
+import { createTheme, Theme } from '@mui/material';
+import { grey, red } from '@mui/material/colors';
 
 export const defaultTheme: Theme = createTheme({
   components: {
     MuiTab: {
       styleOverrides: {
         root: {
-          "&.Mui-selected": {
+          '&.Mui-selected': {
             backgroundColor: grey.A400,
           },
         },
@@ -15,7 +15,7 @@ export const defaultTheme: Theme = createTheme({
     MuiTabs: {
       styleOverrides: {
         indicator: {
-          display: "none",
+          display: 'none',
         },
       },
     },

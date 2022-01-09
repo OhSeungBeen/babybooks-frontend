@@ -1,9 +1,11 @@
 import Dialog from "components/admin/dialog";
+import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 import React from "react";
+import { resetServerContext } from "react-beautiful-dnd";
 import { DialogAction } from "redux/actions";
 import { connectState } from "redux/store";
-import { State, ComponentProps } from "types";
+import { ComponentProps } from "types";
 
 const AdminLayout = dynamic(() => import("components/admin/layout"));
 
@@ -25,10 +27,11 @@ function AdminPage(props: ComponentProps) {
   );
 }
 
-function mapStateToProps(state: State) {
-  return {
-    ...state,
-  };
-}
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  resetServerContext();
+  return { props: { data: [] } };
+};
+
+AdminPage.layout = AdminLayout;
 
 export default connectState(AdminPage);

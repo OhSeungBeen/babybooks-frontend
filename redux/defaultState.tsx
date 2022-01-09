@@ -7,6 +7,12 @@ const initialState: State = {
       width: "250px",
       isShow: true,
     },
+    header: {
+      height: "64px",
+    },
+    footer: {
+      height: "40px",
+    },
   },
   page: {
     title: ADMIN_PAGE_TITLE,

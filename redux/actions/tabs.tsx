@@ -10,8 +10,11 @@ export function reducer(state = initialState.tabs, action: Action): TabsState {
     }
     case ActionType.TAB_ADD: {
       const { payload: tab } = action;
-      state.items.push(tab);
-      return { ...state };
+      return {
+        ...state,
+        items: [...state.items, tab],
+        index: state.items.length,
+      };
     }
     case ActionType.TAB_DELETE: {
       const { payload: id } = action;

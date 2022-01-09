@@ -15,13 +15,14 @@ function Footer(props: ComponentProps): ReactElement {
       padding: "10px",
       zIndex: 1,
       fontSize: "10pt",
+      height: "40px",
     },
   }));
 
   const classes = useStyles();
 
   return (
-    <footer className={classes.footer}>
+    <footer id="footer" className={classes.footer}>
       <Box>Copyright ⓒ 베비북스 All rights reserved.</Box>
     </footer>
   );

@@ -5,10 +5,15 @@ import React, { ReactElement } from "react";
 import { connectState } from "redux/store";
 import { ComponentProps } from "types";
 
+// import PlainLink from '../../common/plainLink';
+
 function Header(props: ComponentProps): ReactElement {
   const { state } = props;
   const useStyles = makeStyles((theme: Theme) => ({
-    header: {
+    appBar: {
+      height: "100%",
+    },
+    toolBar: {
       fontSize: "20pt",
     },
     logo: {},
@@ -27,16 +32,19 @@ function Header(props: ComponentProps): ReactElement {
   const classes = useStyles();
 
   return (
-    <AppBar position="relative">
-      <Toolbar className={classes.header}>
-        <Box className={classes.logo}>📔</Box>
-        <Box className={classes.title}>{state.page.title}</Box>
+    <AppBar position="relative" className={classes.appBar}>
+      <Toolbar className={classes.toolBar}>
+        {/* <Box className={classes.logo}>📔</Box>
+        <PlainLink href="/admin">
+          <Box className={classes.title}>{state.page.title}</Box>
+        </PlainLink>
+
         <Box className={classes.space} />
         <Box>Account</Box>
         <Box className={classes.separator} />
         <Box>{ADMIN_MANAGE_ACCOUNT}</Box>
         <Box className={classes.separator} />
-        <Box>{LOGOUT}</Box>
+        <Box>{LOGOUT}</Box> */}
       </Toolbar>
     </AppBar>
   );

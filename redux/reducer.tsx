@@ -21,3 +21,5 @@ export default function reducer(state: State = initialState, action: Action) {
   }
   return appReducers(state, action);
 }
+
+// export type State = ReturnType<typeof appReducers>;

@@ -6,7 +6,7 @@ export function reducer(state = initialState.app, action: Action): AppState {
   switch (action.type) {
     case ActionType.APP_SHOW_SIDEBAR:
       const { payload: sideBar } = action;
-      return { ...state, sideBar };
+      return { ...state, sideBar: { ...sideBar } };
     default:
       return state;
   }
