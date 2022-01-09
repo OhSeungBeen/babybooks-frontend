@@ -4,7 +4,7 @@ Language: `Typescript`
 
 Framework: `Nextjs`
 
-Dependencies: `Redux` `Webpack`
+Dependencies: `Redux` `Webpack` `Prettier`
 
 UI: `MUI`
 
