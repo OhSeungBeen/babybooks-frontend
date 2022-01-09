@@ -16,8 +16,8 @@ Convention:
 
 - Component
 
-  1. React.FC
-  2. Common Props : ComponentProps
+1. React.FC
+2. Common Props : ComponentProps
 
 - import
 
