@@ -8,14 +8,15 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
     gap: '1rem',
+    marginBottom: '1rem',
   },
 });
 
 const CategoryListFilter: React.FC = () => {
   const classes = useStyles();
 
-  const [showMenuIndex, setShowMenuIndex] = React.useState(-1);
-  const [useMenuIndex, setUseMenuIndex] = React.useState(-1);
+  const [showMenuIndex, setShowMenuIndex] = React.useState(0);
+  const [useMenuIndex, setUseMenuIndex] = React.useState(0);
 
   const onShowMenuSelectChange = (
     e: SelectChangeEvent<typeof showMenuIndex>

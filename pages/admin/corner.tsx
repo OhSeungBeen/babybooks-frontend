@@ -8,7 +8,7 @@ import AdminLayout from '../../components/admin/layout';
 
 const useStyles = makeStyles({});
 
-const Corner = () => {
+const CornerPage = () => {
   const classes = useStyles();
 
   return <div>전시 코너 페이지</div>;
@@ -19,5 +19,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return { props: { data: [] } };
 };
 
-Corner.layout = AdminLayout;
-export default Corner;
+CornerPage.layout = AdminLayout;
+export default CornerPage;

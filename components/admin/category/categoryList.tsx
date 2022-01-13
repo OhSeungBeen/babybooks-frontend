@@ -1,59 +1,57 @@
 import React from 'react';
-import { Theme } from '@mui/material';
-import { TreeView, TreeItem } from '@mui/lab';
-import { TreeItemProps, treeItemClasses } from '@mui/lab/TreeItem';
+import { CategoryListItem } from 'pages/admin/category';
+import CustomTreeView from './customTreeView';
+import CustomTreeItem from './customTreeItem';
+
+interface CateogryListProps {
+  categoryTree: CategoryListItem[];
+  onNodeSelect: (
+    e: React.SyntheticEvent,
+    nodeId: Array<string> | string
+  ) => void;
+}
+
 import { makeStyles } from '@mui/styles';
-import { alpha, styled } from '@mui/material/styles';
-import { MinusSquare, PlusSquare } from './listCustomIcon';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  endIcon: {
-    fontWeight: 'bold',
-    color: `${alpha(theme.palette.text.primary, 0.4)}`,
+const useStyles = makeStyles({
+  treeView: {
+    minHeight: '34rem',
+    maxHeight: '34rem',
+    overflow: 'auto',
+    border: 'solid 1px',
+    padding: '1rem',
   },
-}));
+});
 
-const StyledTreeItem = styled((props: TreeItemProps) => (
-  <TreeItem {...props} />
-))(({ theme }) => ({
-  ['& .MuiTreeItem-content']: {
-    padding: 0,
-  },
-  [`& .${treeItemClasses.iconContainer}`]: {
-    '& .close': {
-      opacity: 0.3,
-    },
-  },
-  [`& .${treeItemClasses.group}`]: {
-    borderLeft: `2px solid ${alpha(theme.palette.text.primary, 0.4)}`,
-  },
-}));
-
-const CategoryList: React.FC = () => {
+const CategoryList: React.FC<CateogryListProps> = ({
+  categoryTree,
+  onNodeSelect,
+}) => {
   const classes = useStyles();
 
+  const renderCategoryTree = (categoryTree: CategoryListItem[]) =>
+    categoryTree.map((categoryTreeItem: CategoryListItem) => (
+      <CustomTreeItem
+        key={categoryTreeItem.id}
+        nodeId={categoryTreeItem.id}
+        label={categoryTreeItem.name}
+      >
+        {Array.isArray(categoryTreeItem.children)
+          ? renderCategoryTree(categoryTreeItem.children)
+          : null}
+      </CustomTreeItem>
+    ));
+
   return (
-    <TreeView
-      defaultExpanded={['1']}
-      defaultCollapseIcon={<MinusSquare />}
-      defaultExpandIcon={<PlusSquare />}
-      defaultEndIcon={<div className={classes.endIcon}>―</div>}
+    <CustomTreeView
+      defaultExpanded={['0']}
+      className={classes.treeView}
+      onNodeSelect={onNodeSelect}
     >
-      <StyledTreeItem nodeId="1" label="Main">
-        <StyledTreeItem nodeId="2" label="Hello" />
-        <StyledTreeItem nodeId="3" label="Subtree with children">
-          <StyledTreeItem nodeId="6" label="Hello" />
-          <StyledTreeItem nodeId="7" label="Sub-subtree with children">
-            <StyledTreeItem nodeId="9" label="Child 1" />
-            <StyledTreeItem nodeId="10" label="Child 2" />
-            <StyledTreeItem nodeId="11" label="Child 3" />
-          </StyledTreeItem>
-          <StyledTreeItem nodeId="8" label="Hello" />
-        </StyledTreeItem>
-        <StyledTreeItem nodeId="4" label="World" />
-        <StyledTreeItem nodeId="5" label="Something something" />
-      </StyledTreeItem>
-    </TreeView>
+      <CustomTreeItem nodeId="0" label={'전체 카테고리'}>
+        {renderCategoryTree(categoryTree)}
+      </CustomTreeItem>
+    </CustomTreeView>
   );
 };
 
