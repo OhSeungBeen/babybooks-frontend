@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Box, Input } from '@mui/material';
-import {} from '@mui/icons-material';
 import { makeStyles } from '@mui/styles';
 import CategoryRowItem from './categoryRowItem';
 

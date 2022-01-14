@@ -1,13 +1,14 @@
 import React from 'react';
-
 import { Box, Input } from '@mui/material';
-import {} from '@mui/icons-material';
 import { makeStyles } from '@mui/styles';
 import CategoryRowItem from './categoryRowItem';
 
 interface CategoryNameRowProps {
   code: string;
   name: string;
+  onNameChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
 }
 
 const useStyles = makeStyles({
@@ -28,7 +29,11 @@ const useStyles = makeStyles({
   },
 });
 
-const CategoryNameRow: React.FC<CategoryNameRowProps> = ({ code, name }) => {
+const CategoryNameRow: React.FC<CategoryNameRowProps> = ({
+  code,
+  name,
+  onNameChange,
+}) => {
   const classes = useStyles();
 
   return (
@@ -40,7 +45,12 @@ const CategoryNameRow: React.FC<CategoryNameRowProps> = ({ code, name }) => {
         <CategoryRowItem
           title="카테고리명"
           content={
-            <Input className={classes.input} disableUnderline value={name} />
+            <Input
+              className={classes.input}
+              disableUnderline
+              value={name}
+              onChange={(e) => onNameChange(e)}
+            />
           }
         ></CategoryRowItem>
       </Box>

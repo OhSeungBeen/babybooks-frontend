@@ -13,7 +13,6 @@ import CategoryRowItem from './categoryRowItem';
 const useStyles = makeStyles({
   container: {
     display: 'flex',
-    flexShrink: 0,
     alignItems: 'center',
   },
   item: {
@@ -44,21 +43,31 @@ const useStyles = makeStyles({
 
 interface CategoryVisibleTypeRowsProps {
   title: string;
+  visible?: boolean;
   visibleType: string;
+  visibleValue: string;
+  onVisibleTypeChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    value: string
+  ) => void;
+  onVisibleTextChange: (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => void;
+  onVisibleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const CategoryVisibleTypeRow: React.FC<CategoryVisibleTypeRowsProps> = ({
   title,
+  visible,
   visibleType,
+  visibleValue,
+  onVisibleTypeChange,
+  onVisibleTextChange,
+  onVisibleImageChange,
 }) => {
   const classes = useStyles();
 
   const input = useRef<HTMLElement>();
-
-  const onInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    (input.current.children[0] as HTMLInputElement).value =
-      e.target.files[0].name;
-  };
 
   return (
     <Box className={classes.container}>
@@ -68,31 +77,53 @@ const CategoryVisibleTypeRow: React.FC<CategoryVisibleTypeRowsProps> = ({
           <>
             <RadioGroup
               row
-              defaultValue="text"
+              value={visibleType}
               className={classes.radioGroup}
-              //  onChange={}
+              onChange={onVisibleTypeChange}
             >
               <FormControlLabel
                 control={<Radio />}
                 value="text"
                 label="텍스트"
                 labelPlacement="end"
+                disabled={!visible && visible !== undefined ? true : false}
               ></FormControlLabel>
               <FormControlLabel
                 control={<Radio />}
                 value="image"
                 label="이미지"
                 labelPlacement="end"
+                disabled={!visible && visible !== undefined ? true : false}
               ></FormControlLabel>
             </RadioGroup>
-            <Input ref={input} className={classes.input} disableUnderline />
+            <Input
+              ref={input}
+              className={classes.input}
+              disableUnderline
+              disabled={
+                (!visible && visible !== undefined) || visibleType === 'image'
+                  ? true
+                  : false
+              }
+              value={visibleValue}
+              onChange={(e) => onVisibleTextChange(e)}
+            />
             <Button
               variant="contained"
               className={classes.button}
               component="label"
+              disabled={
+                (!visible && visible !== undefined) || visibleType === 'text'
+                  ? true
+                  : false
+              }
             >
               파일찾기
-              <input type="file" hidden onChange={(e) => onInput(e)} />
+              <input
+                type="file"
+                hidden
+                onChange={(e) => onVisibleImageChange(e)}
+              />
             </Button>
           </>
         }

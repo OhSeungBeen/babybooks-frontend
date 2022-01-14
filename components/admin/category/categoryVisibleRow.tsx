@@ -26,21 +26,18 @@ const useStyles = makeStyles({
 interface CategoryVisibleRowProps {
   visible: boolean;
   use: boolean;
-  onMenuVisibleChange: (
+  onVisibleChange: (
     e: React.ChangeEvent<HTMLInputElement>,
     value: string
   ) => void;
-  onMenuUseChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    value: string
-  ) => void;
+  onUseChange: (e: React.ChangeEvent<HTMLInputElement>, value: string) => void;
 }
 
 const CategoryVisibleRow: React.FC<CategoryVisibleRowProps> = ({
   visible,
   use,
-  onMenuVisibleChange,
-  onMenuUseChange,
+  onVisibleChange: onVisibleChange,
+  onUseChange: onUseChange,
 }) => {
   const classes = useStyles();
 
@@ -54,19 +51,21 @@ const CategoryVisibleRow: React.FC<CategoryVisibleRowProps> = ({
               row
               value={visible}
               className={classes.radioGroup}
-              onChange={onMenuVisibleChange}
+              onChange={onVisibleChange}
             >
               <FormControlLabel
-                control={<Radio />}
+                disabled={use ? false : true}
                 value={true}
                 label="Y"
                 labelPlacement="end"
+                control={<Radio />}
               ></FormControlLabel>
               <FormControlLabel
-                control={<Radio />}
+                disabled={use ? false : true}
                 value={false}
                 label="N"
                 labelPlacement="end"
+                control={<Radio />}
               ></FormControlLabel>
             </RadioGroup>
           }
@@ -80,19 +79,19 @@ const CategoryVisibleRow: React.FC<CategoryVisibleRowProps> = ({
               row
               value={use}
               className={classes.radioGroup}
-              onChange={onMenuUseChange}
+              onChange={onUseChange}
             >
               <FormControlLabel
-                control={<Radio />}
                 value={true}
                 label="Y"
                 labelPlacement="end"
+                control={<Radio />}
               ></FormControlLabel>
               <FormControlLabel
-                control={<Radio />}
                 value={false}
                 label="N"
                 labelPlacement="end"
+                control={<Radio />}
               ></FormControlLabel>
             </RadioGroup>
           }

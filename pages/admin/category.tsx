@@ -15,13 +15,16 @@ import CategoryAdd from 'components/admin/category/categoryAdd';
 import CategoryLayout from 'components/admin/category/categoryLayout';
 import CategoryVisibleTypeRow from 'components/admin/category/categoryVisibleTypeRow';
 
-interface Category {
+interface Data {
   code: string;
-  name: string;
   visible: boolean;
   use: boolean;
   menuVisibleType: string;
   titleVisibleType: string;
+  menuVisibleText: string;
+  titleVisibleText: string;
+  menuVisibleImage: string;
+  titleVisibleImage: string;
   cornerNumber: string;
   registerId: string;
   modifierId: string;
@@ -29,12 +32,13 @@ interface Category {
   modifiedDate: string;
 }
 
-export interface CategoryListItem {
+export interface Category {
   parentId?: string;
   id: string;
   name: string;
-  children?: CategoryListItem[];
-  category?: Category;
+  children?: Category[];
+  data?: Data;
+  depth?: number;
 }
 
 export interface LayoutCategory {
@@ -42,27 +46,30 @@ export interface LayoutCategory {
   name: string;
 }
 
-const initCategoryList: CategoryListItem[] = [
+const initCategories: Category[] = [
   {
     id: '1',
-    name: '카테고리1',
+    name: '대카테고리1',
     children: [
       {
         parentId: '1',
         id: '1-1',
-        name: '카테고리1-1',
+        name: '중카테고리1-1',
         children: [
           {
             parentId: '1-1',
             id: '1-1-1',
-            name: '카테고리1-1-1',
-            category: {
+            name: '소카테고리1-1-1',
+            data: {
               code: '01000001',
-              name: '카테고리1-1-1',
-              visible: true,
-              use: false,
+              visible: false,
+              use: true,
               menuVisibleType: 'text',
               titleVisibleType: 'image',
+              menuVisibleText: '',
+              titleVisibleText: '',
+              menuVisibleImage: '',
+              titleVisibleImage: '',
               cornerNumber: '3',
               registerId: 'Tes***1',
               modifierId: 'Tes***1',
@@ -74,19 +81,23 @@ const initCategoryList: CategoryListItem[] = [
       },
       {
         id: '1-2',
-        name: '카테고리1-2',
+        name: '중카테고리1-2',
+        parentId: '1',
         children: [
           {
             parentId: '1-2',
             id: '1-2-1',
-            name: '카테고리1-2-1',
-            category: {
+            name: '소카테고리1-2-1',
+            data: {
               code: '01000002',
-              name: '카테고리1-2-1',
               visible: true,
-              use: false,
+              use: true,
               menuVisibleType: 'text',
               titleVisibleType: 'image',
+              menuVisibleText: '',
+              titleVisibleText: '',
+              menuVisibleImage: '',
+              titleVisibleImage: '',
               cornerNumber: '3',
               registerId: 'Tes***1',
               modifierId: 'Tes***1',
@@ -100,19 +111,22 @@ const initCategoryList: CategoryListItem[] = [
   },
   {
     id: '2',
-    name: '카테고리2',
+    name: '대카테고리2',
     children: [
       {
         parentId: '2',
         id: '2-1',
-        name: '카테고리2-1',
-        category: {
+        name: '중카테고리2-1',
+        data: {
           code: '01000003',
-          name: '카테고리2-1',
-          visible: true,
+          visible: false,
           use: false,
           menuVisibleType: 'text',
           titleVisibleType: 'image',
+          menuVisibleText: '',
+          titleVisibleText: '',
+          menuVisibleImage: '',
+          titleVisibleImage: '',
           cornerNumber: '3',
           registerId: 'Tes***1',
           modifierId: 'Tes***1',
@@ -123,19 +137,22 @@ const initCategoryList: CategoryListItem[] = [
       {
         parentId: '2-1',
         id: '2-2',
-        name: '카테고리2-2',
+        name: '중카테고리2-2',
         children: [
           {
             parentId: '2-2',
             id: '2-2-1',
-            name: '카테고리2-2-1',
-            category: {
+            name: '소카테고리2-2-1',
+            data: {
               code: '01000004',
-              name: '카테고리2-2-1',
-              visible: true,
+              visible: false,
               use: false,
               menuVisibleType: 'text',
               titleVisibleType: 'image',
+              menuVisibleText: '',
+              titleVisibleText: '',
+              menuVisibleImage: '',
+              titleVisibleImage: '',
               cornerNumber: '3',
               registerId: 'Tes***1',
               modifierId: 'Tes***1',
@@ -148,6 +165,28 @@ const initCategoryList: CategoryListItem[] = [
     ],
   },
 ];
+
+const initCategory: Category = {
+  parentId: '',
+  id: 'root',
+  name: '',
+  data: {
+    code: '',
+    visible: true,
+    use: true,
+    menuVisibleType: 'text',
+    titleVisibleType: 'text',
+    menuVisibleText: '',
+    titleVisibleText: '',
+    menuVisibleImage: '',
+    titleVisibleImage: '',
+    cornerNumber: '',
+    registerId: '',
+    modifierId: '',
+    registeredDate: '',
+    modifiedDate: '',
+  },
+};
 
 const initLayoutCategories: LayoutCategory[] = [
   { id: '1', name: '메인이미지' },
@@ -180,24 +219,16 @@ const useStyles = makeStyles({
 const CategoryPage = () => {
   const classes = useStyles();
 
-  const [categoryList, setCategoryList] = useState(initCategoryList);
-  const [category, setCategory] = useState({
-    code: '',
-    name: '',
-    visible: false,
-    use: false,
-    menuVisibleType: '',
-    titleVisibleType: '',
-    cornerNumber: '',
-    registerId: '',
-    modifierId: '',
-    registeredDate: '',
-    modifiedDate: '',
-  });
+  const [categories, setCategoreis] = useState(initCategories);
+  const [category, setCategory] = useState(initCategory);
   const [open, setOpen] = useState(false);
   const [categoryNames, setCategoryNames] = useState(['']);
   const [layoutCategories, setLayoutCategories] =
     useState(initLayoutCategories);
+  const [placehoder, setPlacehoder] = useState({
+    input: '대카테고리명',
+    header: null,
+  });
 
   const onAdd = useCallback(
     (index: number) => {
@@ -224,7 +255,7 @@ const CategoryPage = () => {
     [categoryNames]
   );
 
-  const onInputChange = useCallback(
+  const onNamesChange = useCallback(
     (
       e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
       index: number
@@ -274,41 +305,174 @@ const CategoryPage = () => {
     [layoutCategories]
   );
 
-  const foundCategoryListItem = (
-    categoryList: CategoryListItem[],
-    id: string
-  ): CategoryListItem => {
-    let result;
-    categoryList.map((categoryListItem) => {
-      if (categoryListItem.id === id) {
-        return (result = categoryListItem);
-      } else {
-        if (Array.isArray(categoryListItem.children)) {
-          let found = foundCategoryListItem(categoryListItem.children, id);
-          if (found !== undefined) {
-            return (result = found);
-          }
+  const foundCategory = (categories: Category[], id: string): Category => {
+    for (let i = 0; i < categories.length; i++) {
+      if (categories[i].id === id) {
+        return categories[i];
+      }
+      if (Array.isArray(categories[i].children)) {
+        const category = foundCategory(categories[i].children, id);
+        if (category !== undefined) {
+          return category;
         }
       }
-    });
-    return result;
+    }
+  };
+
+  const foundAddedDepthCategory = (
+    categories: Category[],
+    id: string,
+    depth: number = 0,
+    index: number = 0
+  ): Category => {
+    if (index < categories.length) {
+      if (categories[index].id === id) {
+        categories[index].depth = depth;
+        return categories[index];
+      }
+      if (categories[index].children) {
+        const category = foundAddedDepthCategory(
+          categories[index].children,
+          id,
+          depth + 1,
+          0
+        );
+        if (category !== undefined) {
+          return category;
+        }
+      }
+      return foundAddedDepthCategory(categories, id, depth, index + 1);
+    }
   };
 
   const onNodeSelect = useCallback(
-    (e: React.SyntheticEvent, nodeId: string) => {
-      if (nodeId === '0') {
+    (e: React.SyntheticEvent, id: string) => {
+      // root
+      if (id === 'root') {
+        setPlacehoder({ input: '대카테고리명', header: null });
         return;
       }
-      const categoryListItem = foundCategoryListItem(categoryList, nodeId);
-      if (categoryListItem.category) {
-        setCategory(categoryListItem.category);
+      const category = foundAddedDepthCategory(categories, id);
+
+      if (category.data) {
+        setCategory(category);
+      }
+      // largeCategory
+      if (category.depth === 0) {
+        setPlacehoder({ input: '중카테고리명', header: [category.name] });
+        return;
+      }
+      // middleCategory
+      if (category.depth === 1) {
+        const parent = foundAddedDepthCategory(categories, category.parentId);
+        setPlacehoder({
+          input: '소카테고리명',
+          header: [parent.name, category.name],
+        });
+        return;
       }
     },
-    [categoryList]
+    [categories, category]
   );
 
-  const onMenuVisibleChange = () => {};
-  const onMenuUseChange = () => {};
+  const onNameChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setCategory({ ...category, name: e.target.value });
+    },
+    []
+  );
+
+  const onVisibleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
+      const visible = value === 'true';
+      setCategory({
+        ...category,
+        data: { ...category.data, visible },
+      });
+    },
+    [category]
+  );
+  const onUseChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
+      const use = value === 'true';
+      if (use) {
+        setCategory({
+          ...category,
+          data: { ...category.data, use },
+        });
+      } else {
+        setCategory({
+          ...category,
+          data: { ...category.data, use, visible: false },
+        });
+      }
+    },
+    [category]
+  );
+
+  const onMenuVisibleTypeChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
+      setCategory({
+        ...category,
+        data: { ...category.data, menuVisibleType: value },
+      });
+    },
+    [category]
+  );
+
+  const onTitleVisibleTypeChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
+      setCategory({
+        ...category,
+        data: { ...category.data, titleVisibleType: value },
+      });
+    },
+    [category]
+  );
+
+  const onMenuVisibleImageChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files[0]) {
+        setCategory({
+          ...category,
+          data: { ...category.data, menuVisibleImage: e.target.files[0].name },
+        });
+      }
+    },
+    [category]
+  );
+
+  const onTitleVisibleImageChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files[0]) {
+        setCategory({
+          ...category,
+          data: { ...category.data, titleVisibleImage: e.target.files[0].name },
+        });
+      }
+    },
+    [category]
+  );
+
+  const onMenuVisibleTextChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      setCategory({
+        ...category,
+        data: { ...category.data, menuVisibleText: e.target.value },
+      });
+    },
+    [category]
+  );
+
+  const onTitleVisibleTextChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      setCategory({
+        ...category,
+        data: { ...category.data, titleVisibleText: e.target.value },
+      });
+    },
+    [category]
+  );
 
   return (
     <Box className={classes.container}>
@@ -319,7 +483,7 @@ const CategoryPage = () => {
           onButtonClick={onOpen}
         />
         <CategoryListFilter />
-        <CategoryList categoryTree={categoryList} onNodeSelect={onNodeSelect} />
+        <CategoryList categoryTree={categories} onNodeSelect={onNodeSelect} />
       </Box>
       <Box className={classes.cateogoryInfo}>
         <CategoryHeader
@@ -328,30 +492,51 @@ const CategoryPage = () => {
           description="*표시항목은 필수 입력항목입니다."
           onButtonClick={onEdit}
         />
-        <CategoryNameRow code={category.code} name={category.name} />
+        <CategoryNameRow
+          code={category.data.code}
+          name={category.name}
+          onNameChange={onNameChange}
+        />
         <CategoryVisibleRow
-          visible={category.visible}
-          use={category.use}
-          onMenuVisibleChange={onMenuVisibleChange}
-          onMenuUseChange={onMenuUseChange}
+          visible={category.data.visible}
+          use={category.data.use}
+          onVisibleChange={onVisibleChange}
+          onUseChange={onUseChange}
         />
         <CategoryVisibleTypeRow
           title="메뉴노출유형"
-          visibleType={category.menuVisibleType}
+          visible={category.data.visible}
+          visibleType={category.data.menuVisibleType}
+          visibleValue={
+            category.data.menuVisibleType === 'text'
+              ? category.data.menuVisibleText
+              : category.data.menuVisibleImage
+          }
+          onVisibleTypeChange={onMenuVisibleTypeChange}
+          onVisibleImageChange={onMenuVisibleImageChange}
+          onVisibleTextChange={onMenuVisibleTextChange}
         />
         <CategoryVisibleTypeRow
           title="타이틀노출유형"
-          visibleType={category.titleVisibleType}
+          visibleType={category.data.titleVisibleType}
+          visibleValue={
+            category.data.titleVisibleType === 'text'
+              ? category.data.titleVisibleText
+              : category.data.titleVisibleImage
+          }
+          onVisibleTypeChange={onTitleVisibleTypeChange}
+          onVisibleImageChange={onTitleVisibleImageChange}
+          onVisibleTextChange={onTitleVisibleTextChange}
         />
         <CategoryRowItem
           title="전시코너수"
-          content={category.cornerNumber}
+          content={category.data.cornerNumber}
         ></CategoryRowItem>
         <CategoryDateRow
-          registerId={category.registerId}
-          registeredDate={category.registeredDate}
-          modifierId={category.modifierId}
-          modifiedDate={category.modifiedDate}
+          registerId={category.data.registerId}
+          registeredDate={category.data.registeredDate}
+          modifierId={category.data.modifierId}
+          modifiedDate={category.data.modifiedDate}
         />
         <CategoryLayout
           categories={layoutCategories}
@@ -362,9 +547,11 @@ const CategoryPage = () => {
       <CategoryAdd
         open={open}
         categoryNames={categoryNames}
+        placeholder={placehoder}
+        depth={category.depth}
         onAdd={onAdd}
         onDelete={onDelete}
-        onInputChange={onInputChange}
+        onNamesChange={onNamesChange}
         onConfirm={onConfirm}
         onCancel={onCancel}
       />

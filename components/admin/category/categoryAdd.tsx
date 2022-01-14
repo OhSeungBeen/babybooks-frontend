@@ -15,9 +15,11 @@ import { makeStyles } from '@mui/styles';
 interface CategoryAddProps {
   open: boolean;
   categoryNames: string[];
+  placeholder: { input: string; header: string[] };
+  depth: number;
   onAdd: (index: number) => void;
   onDelete: (index: number) => void;
-  onInputChange: (
+  onNamesChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     index: number
   ) => void;
@@ -71,12 +73,17 @@ const useStyles = makeStyles((Theme: Theme) => ({
     },
     marginBottom: '0.8rem',
   },
+  placehoderHeader: {
+    fontWeight: 'bold',
+    marginBottom: '0.5rem',
+  },
 }));
 
 const CategoryAdd: React.FC<CategoryAddProps> = ({
   open,
   categoryNames,
-  onInputChange,
+  placeholder,
+  onNamesChange,
   onAdd,
   onDelete,
   onConfirm,
@@ -97,14 +104,20 @@ const CategoryAdd: React.FC<CategoryAddProps> = ({
         </IconButton>
       </Box>
       <Divider />
+      {placeholder.header &&
+        placeholder.header.map((header, index) => (
+          <Typography key={index} className={classes.placehoderHeader}>
+            {index === 0 ? `[대] ${header}` : `[중] ${header}`}
+          </Typography>
+        ))}
       {categoryNames.map((categoryName, index) => (
         <Box key={index} className={classes.addArea}>
           <OutlinedInput
             size="small"
-            placeholder=""
+            placeholder={placeholder.input}
             className={classes.input}
             value={categoryName}
-            onChange={(e) => onInputChange(e, index)}
+            onChange={(e) => onNamesChange(e, index)}
           />
           <IconButton onClick={() => onAdd(index)}>
             <Add />

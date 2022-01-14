@@ -1,14 +1,11 @@
 import React from 'react';
-import { CategoryListItem } from 'pages/admin/category';
+import { Category } from 'pages/admin/category';
 import CustomTreeView from './customTreeView';
 import CustomTreeItem from './customTreeItem';
 
 interface CateogryListProps {
-  categoryTree: CategoryListItem[];
-  onNodeSelect: (
-    e: React.SyntheticEvent,
-    nodeId: Array<string> | string
-  ) => void;
+  categoryTree: Category[];
+  onNodeSelect: (e: React.SyntheticEvent, id: Array<string> | string) => void;
 }
 
 import { makeStyles } from '@mui/styles';
@@ -29,8 +26,8 @@ const CategoryList: React.FC<CateogryListProps> = ({
 }) => {
   const classes = useStyles();
 
-  const renderCategoryTree = (categoryTree: CategoryListItem[]) =>
-    categoryTree.map((categoryTreeItem: CategoryListItem) => (
+  const renderCategoryTree = (categoryTree: Category[]) =>
+    categoryTree.map((categoryTreeItem: Category) => (
       <CustomTreeItem
         key={categoryTreeItem.id}
         nodeId={categoryTreeItem.id}
@@ -44,11 +41,11 @@ const CategoryList: React.FC<CateogryListProps> = ({
 
   return (
     <CustomTreeView
-      defaultExpanded={['0']}
+      defaultExpanded={['root']}
       className={classes.treeView}
       onNodeSelect={onNodeSelect}
     >
-      <CustomTreeItem nodeId="0" label={'전체 카테고리'}>
+      <CustomTreeItem nodeId="root" label={'전체 카테고리'}>
         {renderCategoryTree(categoryTree)}
       </CustomTreeItem>
     </CustomTreeView>
