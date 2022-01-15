@@ -44,7 +44,7 @@ const FavoritesList: React.FC<FavoritesListProps> = ({ modifiable }) => {
   const [favorites, setFavorites] = useState<Array<Favorite>>(Favorites);
 
   const onDragEnd = ({ destination, source }: DropResult) => {
-    if (destination === null) {
+    if (!destination) {
       return;
     }
 

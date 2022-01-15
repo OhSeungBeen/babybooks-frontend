@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Input } from '@mui/material';
+import { Box, OutlinedInput, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import CategoryRowItem from './categoryRowItem';
 
@@ -11,23 +11,19 @@ interface CategoryNameRowProps {
   ) => void;
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     display: 'flex',
     alignItems: 'center',
   },
   item: {
     flex: 1,
-  },
-  input: {
-    border: 'solid 1px',
-    borderRadius: '4px',
-    fontSize: '0.875rem',
     '& input': {
+      fontSize: '0.875rem',
       padding: '0.3rem 0.6rem',
     },
   },
-});
+}));
 
 const CategoryNameRow: React.FC<CategoryNameRowProps> = ({
   code,
@@ -45,9 +41,8 @@ const CategoryNameRow: React.FC<CategoryNameRowProps> = ({
         <CategoryRowItem
           title="카테고리명"
           content={
-            <Input
-              className={classes.input}
-              disableUnderline
+            <OutlinedInput
+              inputProps={{ maxLength: 20 }}
               value={name}
               onChange={(e) => onNameChange(e)}
             />

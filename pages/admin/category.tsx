@@ -1,8 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import { Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { resetServerContext, DropResult } from 'react-beautiful-dnd';
+import { SelectChangeEvent } from '@mui/material/Select';
 import AdminLayout from 'components/admin/layout';
 import CategoryVisibleRow from 'components/admin/category/categoryVisibleRow';
 import CategoryNameRow from 'components/admin/category/categoryNameRow';
@@ -135,7 +136,7 @@ const initCategories: Category[] = [
         },
       },
       {
-        parentId: '2-1',
+        parentId: '2',
         id: '2-2',
         name: '중카테고리2-2',
         children: [
@@ -219,7 +220,7 @@ const useStyles = makeStyles({
 const CategoryPage = () => {
   const classes = useStyles();
 
-  const [categories, setCategoreis] = useState(initCategories);
+  const [categories, setCategories] = useState(initCategories);
   const [category, setCategory] = useState(initCategory);
   const [open, setOpen] = useState(false);
   const [categoryNames, setCategoryNames] = useState(['']);
@@ -229,6 +230,49 @@ const CategoryPage = () => {
     input: '대카테고리명',
     header: null,
   });
+  const [fillterIndex, setFillterIndex] = useState({ visible: '0', use: '0' });
+  const [fillterCategories, setFillterCategories] = useState([]);
+
+  const filterCategories = (
+    categories: Category[],
+    visible: boolean,
+    use: boolean
+  ) =>
+    categories.filter((category) => {
+      if (category.children)
+        category.children = filterCategories(category.children, visible, use);
+      if (category.data) {
+        return category.data.visible === visible && category.data.use === use;
+      } else {
+        if (category.children.length > 0) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    });
+
+  const onFillterChange = useCallback(
+    (e: SelectChangeEvent, key: string) => {
+      console.log(e.target.value);
+      setFillterIndex({ ...fillterIndex, [key]: e.target.value });
+    },
+
+    [fillterIndex]
+  );
+
+  useEffect(() => {
+    if (!(fillterIndex.use === '0' && fillterIndex.visible === '0')) {
+      console.log(fillterIndex.use, fillterIndex.visible);
+      setFillterCategories(
+        filterCategories(
+          categories,
+          fillterIndex.visible === '1' ? true : false,
+          fillterIndex.use === '1' ? true : false
+        )
+      );
+    }
+  }, [fillterIndex]);
 
   const onAdd = useCallback(
     (index: number) => {
@@ -283,10 +327,13 @@ const CategoryPage = () => {
     setOpen(true);
   }, [open]);
 
-  const onEdit = () => {};
+  const onEdit = useCallback(() => {}, [category]);
 
   const onDragEnd = useCallback(
     ({ destination, source }: DropResult) => {
+      if (!destination) {
+        return;
+      }
       const newLayout = Array.from(layoutCategories);
       const [removed] = newLayout.splice(destination.index, 1);
       newLayout.splice(source.index, 0, removed);
@@ -337,7 +384,7 @@ const CategoryPage = () => {
           depth + 1,
           0
         );
-        if (category !== undefined) {
+        if (category) {
           return category;
         }
       }
@@ -377,9 +424,12 @@ const CategoryPage = () => {
 
   const onNameChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setCategory({ ...category, name: e.target.value });
+      setCategory({
+        ...category,
+        name: e.target.value,
+      });
     },
-    []
+    [category]
   );
 
   const onVisibleChange = useCallback(
@@ -482,8 +532,11 @@ const CategoryPage = () => {
           buttonText="추가"
           onButtonClick={onOpen}
         />
-        <CategoryListFilter />
-        <CategoryList categoryTree={categories} onNodeSelect={onNodeSelect} />
+        <CategoryListFilter
+          onFillterChange={onFillterChange}
+          fillterIndex={fillterIndex}
+        />
+        <CategoryList categories={categories} onNodeSelect={onNodeSelect} />
       </Box>
       <Box className={classes.cateogoryInfo}>
         <CategoryHeader

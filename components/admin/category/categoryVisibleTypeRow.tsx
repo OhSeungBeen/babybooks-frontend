@@ -1,35 +1,31 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import {
   Radio,
   FormControlLabel,
   RadioGroup,
   Box,
-  Input,
+  OutlinedInput,
   Button,
+  Theme,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import CategoryRowItem from './categoryRowItem';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     display: 'flex',
     alignItems: 'center',
-  },
-  item: {
     flex: 1,
-    '& .MuiFormGroup-root': {},
-  },
-  input: {
-    border: 'solid 1px',
-    borderRadius: '4px',
-    fontSize: '0.875rem',
     '& input': {
+      fontSize: '0.875rem',
       padding: '0.3rem 0.6rem',
     },
+    '& .MuiFormGroup-root': { flexShrink: 0 },
   },
   button: {
     fontSize: '0.775rem',
     marginLeft: '0.5rem',
+    flexShrink: 0,
   },
   radioGroup: {
     '& span': {
@@ -39,7 +35,7 @@ const useStyles = makeStyles({
       fontSize: '1.1rem',
     },
   },
-});
+}));
 
 interface CategoryVisibleTypeRowsProps {
   title: string;
@@ -66,8 +62,6 @@ const CategoryVisibleTypeRow: React.FC<CategoryVisibleTypeRowsProps> = ({
   onVisibleImageChange,
 }) => {
   const classes = useStyles();
-
-  const input = useRef<HTMLElement>();
 
   return (
     <Box className={classes.container}>
@@ -96,10 +90,7 @@ const CategoryVisibleTypeRow: React.FC<CategoryVisibleTypeRowsProps> = ({
                 disabled={!visible && visible !== undefined ? true : false}
               ></FormControlLabel>
             </RadioGroup>
-            <Input
-              ref={input}
-              className={classes.input}
-              disableUnderline
+            <OutlinedInput
               disabled={
                 (!visible && visible !== undefined) || visibleType === 'image'
                   ? true

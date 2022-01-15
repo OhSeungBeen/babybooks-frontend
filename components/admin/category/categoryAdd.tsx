@@ -27,7 +27,7 @@ interface CategoryAddProps {
   onCancel: () => void;
 }
 
-const useStyles = makeStyles((Theme: Theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   dialogPaper: {
     padding: '1rem',
     width: '30rem',
@@ -48,7 +48,7 @@ const useStyles = makeStyles((Theme: Theme) => ({
     display: 'flex',
     '& button': {
       color: 'white',
-      backgroundColor: Theme.palette.primary.main,
+      backgroundColor: theme.palette.primary.main,
       borderRadius: '4px',
       marginRight: '0.3rem',
     },
@@ -113,6 +113,7 @@ const CategoryAdd: React.FC<CategoryAddProps> = ({
       {categoryNames.map((categoryName, index) => (
         <Box key={index} className={classes.addArea}>
           <OutlinedInput
+            inputProps={{ maxLength: 20 }}
             size="small"
             placeholder={placeholder.input}
             className={classes.input}
