@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Select, MenuItem, Box } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { makeStyles } from '@mui/styles';
 
 interface CategoryListFilterProps {
-  fillterIndex: { use: string; visible: string };
-  onFillterChange: (e: SelectChangeEvent, key: string) => void;
+  onChange: (param: { visible: number; use: number }) => void;
 }
 
 const useStyles = makeStyles({
@@ -18,18 +17,28 @@ const useStyles = makeStyles({
 });
 
 const CategoryListFilter: React.FC<CategoryListFilterProps> = ({
-  fillterIndex,
-  onFillterChange,
+  onChange,
 }) => {
   const classes = useStyles();
+
+  const [indexs, setIndexs] = useState({ visible: 0, use: 0 });
+
+  const onChangeSelect = (e: SelectChangeEvent<number>) => {
+    setIndexs({ ...indexs, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    onChange(indexs);
+  }, [indexs]);
 
   return (
     <Box className={classes.container}>
       <Select
         fullWidth
         size="small"
-        value={fillterIndex.visible}
-        onChange={(e) => onFillterChange(e, 'visible')}
+        value={indexs.visible}
+        name="visible"
+        onChange={(e) => onChangeSelect(e)}
         inputProps={{ 'aria-label': 'Without label' }}
       >
         <MenuItem value={0}>메뉴노출여부 </MenuItem>
@@ -39,8 +48,9 @@ const CategoryListFilter: React.FC<CategoryListFilterProps> = ({
       <Select
         fullWidth
         size="small"
-        value={fillterIndex.use}
-        onChange={(e) => onFillterChange(e, 'use')}
+        name="use"
+        value={indexs.use}
+        onChange={(e) => onChangeSelect(e)}
         inputProps={{ 'aria-label': 'Without label' }}
       >
         <MenuItem value={0}>메뉴사용여부</MenuItem>

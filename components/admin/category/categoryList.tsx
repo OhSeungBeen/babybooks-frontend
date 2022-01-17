@@ -31,7 +31,7 @@ const CategoryList: React.FC<CateogryListProps> = ({
       <CustomTreeItem
         key={category.id}
         nodeId={category.id}
-        label={`${category.name} ${category.data ? category.data.use : 'x'}  `}
+        label={category.name}
       >
         {category.children ? renderCategoryTree(category.children) : null}
       </CustomTreeItem>

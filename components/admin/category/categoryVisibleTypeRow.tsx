@@ -1,125 +1,95 @@
-import React from 'react';
-import {
-  Radio,
-  FormControlLabel,
-  RadioGroup,
-  Box,
-  OutlinedInput,
-  Button,
-  Theme,
-} from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import CategoryRowItem from './categoryRowItem';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    flex: 1,
-    '& input': {
-      fontSize: '0.875rem',
-      padding: '0.3rem 0.6rem',
-    },
-    '& .MuiFormGroup-root': { flexShrink: 0 },
-  },
-  button: {
-    fontSize: '0.775rem',
-    marginLeft: '0.5rem',
-    flexShrink: 0,
-  },
-  radioGroup: {
-    '& span': {
-      fontSize: '0.875rem',
-    },
-    '& svg': {
-      fontSize: '1.1rem',
-    },
-  },
-}));
+import TextImageInput from './textImageInput';
 
 interface CategoryVisibleTypeRowsProps {
-  title: string;
-  visible?: boolean;
-  visibleType: string;
-  visibleValue: string;
-  onVisibleTypeChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    value: string
-  ) => void;
-  onVisibleTextChange: (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => void;
-  onVisibleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  visible: boolean;
+  menuVisibleType: 'image' | 'text';
+  menuVisibleText: string;
+  menuVisibleImage: string;
+  titleVisibleType: 'image' | 'text';
+  titleVisibleText: string;
+  titleVisibleImage: string;
+  onChange: (params: {
+    menuVisible: {
+      menuVisibleType: 'image' | 'text';
+      menuVisibleText: string;
+      menuVisibleImage: string;
+    };
+    titleVisible: {
+      titleVisibleType: 'image' | 'text';
+      titleVisibleText: string;
+      titleVisibleImage: string;
+    };
+  }) => void;
 }
 
 const CategoryVisibleTypeRow: React.FC<CategoryVisibleTypeRowsProps> = ({
-  title,
   visible,
-  visibleType,
-  visibleValue,
-  onVisibleTypeChange,
-  onVisibleTextChange,
-  onVisibleImageChange,
+  menuVisibleType,
+  menuVisibleText,
+  menuVisibleImage,
+  titleVisibleType,
+  titleVisibleText,
+  titleVisibleImage,
+  onChange: onUpdate,
 }) => {
-  const classes = useStyles();
+  const mounted = useRef(false);
+  const [values, setValues] = useState({
+    menuVisible: { menuVisibleType, menuVisibleText, menuVisibleImage },
+    titleVisible: { titleVisibleType, titleVisibleText, titleVisibleImage },
+  });
+
+  const onChange = useCallback(
+    ({
+      name,
+      values,
+    }: {
+      name: string;
+      values: { type: string; text: string; image: string };
+    }) => {
+      setValues((prev) => ({ ...prev, [name]: values }));
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (!mounted.current) return;
+    onUpdate(values);
+  }, [values, onUpdate]);
+
+  useEffect(() => {
+    mounted.current = true;
+  }, []);
 
   return (
-    <Box className={classes.container}>
+    <>
       <CategoryRowItem
-        title={title}
+        title="메뉴노출유형"
         content={
-          <>
-            <RadioGroup
-              row
-              value={visibleType}
-              className={classes.radioGroup}
-              onChange={onVisibleTypeChange}
-            >
-              <FormControlLabel
-                control={<Radio />}
-                value="text"
-                label="텍스트"
-                labelPlacement="end"
-                disabled={!visible && visible !== undefined ? true : false}
-              ></FormControlLabel>
-              <FormControlLabel
-                control={<Radio />}
-                value="image"
-                label="이미지"
-                labelPlacement="end"
-                disabled={!visible && visible !== undefined ? true : false}
-              ></FormControlLabel>
-            </RadioGroup>
-            <OutlinedInput
-              disabled={
-                (!visible && visible !== undefined) || visibleType === 'image'
-                  ? true
-                  : false
-              }
-              value={visibleValue}
-              onChange={(e) => onVisibleTextChange(e)}
-            />
-            <Button
-              variant="contained"
-              className={classes.button}
-              component="label"
-              disabled={
-                (!visible && visible !== undefined) || visibleType === 'text'
-                  ? true
-                  : false
-              }
-            >
-              파일찾기
-              <input
-                type="file"
-                hidden
-                onChange={(e) => onVisibleImageChange(e)}
-              />
-            </Button>
-          </>
+          <TextImageInput
+            name="menuVisible"
+            type={menuVisibleType}
+            image={menuVisibleImage}
+            text={menuVisibleText}
+            disabled={!visible}
+            onChange={onChange}
+          />
         }
       />
-    </Box>
+      <CategoryRowItem
+        title="타이틀노출유형"
+        content={
+          <TextImageInput
+            name="titleVisible"
+            type={titleVisibleType}
+            image={titleVisibleImage}
+            text={titleVisibleText}
+            onChange={onChange}
+          />
+        }
+      />
+    </>
   );
 };
 

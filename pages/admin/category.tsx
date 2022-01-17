@@ -3,7 +3,6 @@ import { GetServerSideProps } from 'next';
 import { Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { resetServerContext, DropResult } from 'react-beautiful-dnd';
-import { SelectChangeEvent } from '@mui/material/Select';
 import AdminLayout from 'components/admin/layout';
 import CategoryVisibleRow from 'components/admin/category/categoryVisibleRow';
 import CategoryNameRow from 'components/admin/category/categoryNameRow';
@@ -20,8 +19,8 @@ interface Data {
   code: string;
   visible: boolean;
   use: boolean;
-  menuVisibleType: string;
-  titleVisibleType: string;
+  menuVisibleType: 'text' | 'image';
+  titleVisibleType: 'text' | 'image';
   menuVisibleText: string;
   titleVisibleText: string;
   menuVisibleImage: string;
@@ -95,8 +94,8 @@ const initCategories: Category[] = [
               use: true,
               menuVisibleType: 'text',
               titleVisibleType: 'image',
-              menuVisibleText: '',
-              titleVisibleText: '',
+              menuVisibleText: '소카테고리1-2-1',
+              titleVisibleText: '소카테고리1-2-1',
               menuVisibleImage: '',
               titleVisibleImage: '',
               cornerNumber: '3',
@@ -220,111 +219,28 @@ const useStyles = makeStyles({
 const CategoryPage = () => {
   const classes = useStyles();
 
+  const [open, setOpen] = useState(false);
   const [categories, setCategories] = useState(initCategories);
   const [category, setCategory] = useState(initCategory);
-  const [open, setOpen] = useState(false);
-  const [categoryNames, setCategoryNames] = useState(['']);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [filterdCategories, setFilterdCategories] = useState(null);
   const [layoutCategories, setLayoutCategories] =
     useState(initLayoutCategories);
   const [placehoder, setPlacehoder] = useState({
     input: '대카테고리명',
     header: null,
   });
-  const [fillterIndex, setFillterIndex] = useState({ visible: '0', use: '0' });
-  const [fillterCategories, setFillterCategories] = useState([]);
-
-  const filterCategories = (
-    categories: Category[],
-    visible: boolean,
-    use: boolean
-  ) =>
-    categories.filter((category) => {
-      if (category.children)
-        category.children = filterCategories(category.children, visible, use);
-      if (category.data) {
-        return category.data.visible === visible && category.data.use === use;
-      } else {
-        if (category.children.length > 0) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    });
-
-  const onFillterChange = useCallback(
-    (e: SelectChangeEvent, key: string) => {
-      console.log(e.target.value);
-      setFillterIndex({ ...fillterIndex, [key]: e.target.value });
-    },
-
-    [fillterIndex]
-  );
-
-  useEffect(() => {
-    if (!(fillterIndex.use === '0' && fillterIndex.visible === '0')) {
-      console.log(fillterIndex.use, fillterIndex.visible);
-      setFillterCategories(
-        filterCategories(
-          categories,
-          fillterIndex.visible === '1' ? true : false,
-          fillterIndex.use === '1' ? true : false
-        )
-      );
-    }
-  }, [fillterIndex]);
-
-  const onAdd = useCallback(
-    (index: number) => {
-      if (categoryNames.length < 10) {
-        setCategoryNames([
-          ...categoryNames.slice(0, index + 1),
-          '',
-          ...categoryNames.slice(index + 1),
-        ]);
-      }
-    },
-    [categoryNames]
-  );
-
-  const onDelete = useCallback(
-    (index: number) => {
-      if (categoryNames.length > 1) {
-        setCategoryNames([
-          ...categoryNames.slice(0, index),
-          ...categoryNames.slice(index + 1),
-        ]);
-      }
-    },
-    [categoryNames]
-  );
-
-  const onNamesChange = useCallback(
-    (
-      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-      index: number
-    ) => {
-      setCategoryNames([
-        ...categoryNames.slice(0, index),
-        e.target.value,
-        ...categoryNames.slice(index + 1),
-      ]);
-    },
-    [categoryNames]
-  );
-
-  const onConfirm = useCallback(() => {
-    setOpen(false);
-    setCategoryNames(['']);
-  }, [open, categoryNames]);
-
-  const onCancel = useCallback(() => {
-    setOpen(false);
-    setCategoryNames(['']);
-  }, [open, categoryNames]);
 
   const onOpen = useCallback(() => {
     setOpen(true);
+  }, [open]);
+
+  const onConfirm = useCallback(() => {
+    setOpen(false);
+  }, [open]);
+
+  const onCancel = useCallback(() => {
+    setOpen(false);
   }, [open]);
 
   const onEdit = useCallback(() => {}, [category]);
@@ -342,7 +258,7 @@ const CategoryPage = () => {
     [layoutCategories]
   );
 
-  const onLayoutDelete = useCallback(
+  const onDelteLayout = useCallback(
     (index: number) => {
       setLayoutCategories([
         ...layoutCategories.slice(0, index),
@@ -351,20 +267,6 @@ const CategoryPage = () => {
     },
     [layoutCategories]
   );
-
-  const foundCategory = (categories: Category[], id: string): Category => {
-    for (let i = 0; i < categories.length; i++) {
-      if (categories[i].id === id) {
-        return categories[i];
-      }
-      if (Array.isArray(categories[i].children)) {
-        const category = foundCategory(categories[i].children, id);
-        if (category !== undefined) {
-          return category;
-        }
-      }
-    }
-  };
 
   const foundAddedDepthCategory = (
     categories: Category[],
@@ -422,106 +324,82 @@ const CategoryPage = () => {
     [categories, category]
   );
 
-  const onNameChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setCategory({
-        ...category,
-        name: e.target.value,
-      });
+  const onChangeVisbleUse = useCallback(({ use, visible }) => {
+    if (use) {
+      setCategory((prev) => ({
+        ...prev,
+        data: { ...prev.data, use, visible },
+      }));
+    } else {
+      setCategory((prev) => ({
+        ...prev,
+        data: { ...prev.data, use, visible: false },
+      }));
+    }
+  }, []);
+
+  const onChangeVisibleType = useCallback(({ menuVisible, titleVisible }) => {
+    setCategory((prev) => ({
+      ...prev,
+      data: {
+        ...prev.data,
+        menuVisibleType: menuVisible.type,
+        menuVisibleText: menuVisible.text,
+        menuVisibleImage: menuVisible.image,
+        titleVisibleType: titleVisible.type,
+        titleVisibleText: titleVisible.text,
+        titleVisibleImage: titleVisible.image,
+      },
+    }));
+  }, []);
+
+  const onChangeName = useCallback(
+    (name) => {
+      setCategory((prev) => ({
+        ...prev,
+        name,
+      }));
     },
     [category]
   );
 
-  const onVisibleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
-      const visible = value === 'true';
-      setCategory({
-        ...category,
-        data: { ...category.data, visible },
-      });
-    },
-    [category]
-  );
-  const onUseChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
-      const use = value === 'true';
-      if (use) {
-        setCategory({
-          ...category,
-          data: { ...category.data, use },
-        });
+  const filterCategories = (
+    categories: Category[],
+    filterIdnex: { visible: number; use: number }
+  ) => {
+    let copyCategories = JSON.parse(JSON.stringify(categories));
+    return copyCategories.filter((category: Category) => {
+      if (category.children)
+        category.children = filterCategories(category.children, filterIdnex);
+      if (category.data) {
+        const use = filterIdnex.use === 1;
+        const visible = filterIdnex.visible === 1;
+        if (filterIdnex.visible === 0) {
+          return category.data.use === use;
+        } else if (filterIdnex.use === 0) {
+          return category.data.visible === visible;
+        } else {
+          return category.data.visible === visible && category.data.use === use;
+        }
       } else {
-        setCategory({
-          ...category,
-          data: { ...category.data, use, visible: false },
-        });
+        if (category.children.length > 0) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    });
+  };
+
+  const onChangeFilter = useCallback(
+    ({ visible, use }: { visible: number; use: number }) => {
+      if (visible === 0 && use === 0) {
+        setFilterdCategories(null);
+      } else {
+        setFilterdCategories(filterCategories(categories, { visible, use }));
       }
     },
-    [category]
-  );
-
-  const onMenuVisibleTypeChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
-      setCategory({
-        ...category,
-        data: { ...category.data, menuVisibleType: value },
-      });
-    },
-    [category]
-  );
-
-  const onTitleVisibleTypeChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
-      setCategory({
-        ...category,
-        data: { ...category.data, titleVisibleType: value },
-      });
-    },
-    [category]
-  );
-
-  const onMenuVisibleImageChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files[0]) {
-        setCategory({
-          ...category,
-          data: { ...category.data, menuVisibleImage: e.target.files[0].name },
-        });
-      }
-    },
-    [category]
-  );
-
-  const onTitleVisibleImageChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files[0]) {
-        setCategory({
-          ...category,
-          data: { ...category.data, titleVisibleImage: e.target.files[0].name },
-        });
-      }
-    },
-    [category]
-  );
-
-  const onMenuVisibleTextChange = useCallback(
-    (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-      setCategory({
-        ...category,
-        data: { ...category.data, menuVisibleText: e.target.value },
-      });
-    },
-    [category]
-  );
-
-  const onTitleVisibleTextChange = useCallback(
-    (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-      setCategory({
-        ...category,
-        data: { ...category.data, titleVisibleText: e.target.value },
-      });
-    },
-    [category]
+    [filterCategories]
   );
 
   return (
@@ -530,56 +408,40 @@ const CategoryPage = () => {
         <CategoryHeader
           title="전시카테고리"
           buttonText="추가"
-          onButtonClick={onOpen}
+          onClickButton={onOpen}
         />
-        <CategoryListFilter
-          onFillterChange={onFillterChange}
-          fillterIndex={fillterIndex}
+        <CategoryListFilter onChange={onChangeFilter} />
+        <CategoryList
+          categories={filterdCategories ? filterdCategories : categories}
+          onNodeSelect={onNodeSelect}
         />
-        <CategoryList categories={categories} onNodeSelect={onNodeSelect} />
       </Box>
       <Box className={classes.cateogoryInfo}>
         <CategoryHeader
           title="카테고리 정보"
           buttonText="수정"
           description="*표시항목은 필수 입력항목입니다."
-          onButtonClick={onEdit}
+          onClickButton={onEdit}
         />
         <CategoryNameRow
           code={category.data.code}
           name={category.name}
-          onNameChange={onNameChange}
+          onChange={onChangeName}
         />
         <CategoryVisibleRow
           visible={category.data.visible}
           use={category.data.use}
-          onVisibleChange={onVisibleChange}
-          onUseChange={onUseChange}
+          onChange={onChangeVisbleUse}
         />
         <CategoryVisibleTypeRow
-          title="메뉴노출유형"
           visible={category.data.visible}
-          visibleType={category.data.menuVisibleType}
-          visibleValue={
-            category.data.menuVisibleType === 'text'
-              ? category.data.menuVisibleText
-              : category.data.menuVisibleImage
-          }
-          onVisibleTypeChange={onMenuVisibleTypeChange}
-          onVisibleImageChange={onMenuVisibleImageChange}
-          onVisibleTextChange={onMenuVisibleTextChange}
-        />
-        <CategoryVisibleTypeRow
-          title="타이틀노출유형"
-          visibleType={category.data.titleVisibleType}
-          visibleValue={
-            category.data.titleVisibleType === 'text'
-              ? category.data.titleVisibleText
-              : category.data.titleVisibleImage
-          }
-          onVisibleTypeChange={onTitleVisibleTypeChange}
-          onVisibleImageChange={onTitleVisibleImageChange}
-          onVisibleTextChange={onTitleVisibleTextChange}
+          menuVisibleType={category.data.menuVisibleType}
+          menuVisibleText={category.data.menuVisibleText}
+          menuVisibleImage={category.data.menuVisibleImage}
+          titleVisibleType={category.data.titleVisibleType}
+          titleVisibleText={category.data.titleVisibleText}
+          titleVisibleImage={category.data.titleVisibleImage}
+          onChange={onChangeVisibleType}
         />
         <CategoryRowItem
           title="전시코너수"
@@ -594,17 +456,13 @@ const CategoryPage = () => {
         <CategoryLayout
           categories={layoutCategories}
           onDragEnd={onDragEnd}
-          onDelete={onLayoutDelete}
+          onDelete={onDelteLayout}
         />
       </Box>
       <CategoryAdd
         open={open}
-        categoryNames={categoryNames}
         placeholder={placehoder}
         depth={category.depth}
-        onAdd={onAdd}
-        onDelete={onDelete}
-        onNamesChange={onNamesChange}
         onConfirm={onConfirm}
         onCancel={onCancel}
       />
