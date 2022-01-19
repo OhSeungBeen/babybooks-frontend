@@ -4,39 +4,45 @@ import { makeStyles } from '@mui/styles';
 
 export interface CategoryInfoItemProps {
   title: string;
-  children: JSX.Element | string;
+  content: string | number | JSX.Element;
 }
 
 const useStyles = makeStyles({
   container: {
     display: 'flex',
     alignItems: 'center',
+    marginBottom: '0.2rem',
   },
   title: {
-    fontSize: '1rem',
     width: '7.5rem',
-    '& p': {
-      fontSize: '1rem',
-    },
+    '& p': {},
   },
   content: {
     flex: 1,
-    fontSize: '1rem',
+    display: 'flex',
+    alignItems: 'center',
+    flexShrink: 0,
   },
 });
 
 const CategoryInfoItem: React.FC<CategoryInfoItemProps> = ({
   title,
-  children,
+  content,
 }) => {
   const classes = useStyles();
 
   return (
     <Box className={classes.container}>
       <Box className={classes.title}>
-        <Typography>{title}</Typography>
+        <Typography variant="body2">{title}</Typography>
       </Box>
-      <Box className={classes.content}>{children}</Box>
+      <Box className={classes.content}>
+        {typeof content === 'string' ? (
+          <Typography variant="body2">{content}</Typography>
+        ) : (
+          <>{content}</>
+        )}
+      </Box>
     </Box>
   );
 };

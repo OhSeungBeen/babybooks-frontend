@@ -1,58 +1,61 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Select, MenuItem, Box } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { makeStyles } from '@mui/styles';
+
+interface CategoryListFilterProps {
+  onChange: (param: { visible: number; use: number }) => void;
+}
 
 const useStyles = makeStyles({
   container: {
     display: 'flex',
     justifyContent: 'space-between',
     gap: '1rem',
+    marginBottom: '1rem',
   },
 });
 
-const CategoryListFilter: React.FC = () => {
+const CategoryListFilter: React.FC<CategoryListFilterProps> = ({
+  onChange,
+}) => {
   const classes = useStyles();
 
-  const [showMenuIndex, setShowMenuIndex] = React.useState(-1);
-  const [useMenuIndex, setUseMenuIndex] = React.useState(-1);
+  const [indexs, setIndexs] = useState({ visible: 0, use: 0 });
 
-  const onShowMenuSelectChange = (
-    e: SelectChangeEvent<typeof showMenuIndex>
-  ) => {
-    setShowMenuIndex(e.target.value as number);
+  const onChangeSelect = (e: SelectChangeEvent<number>) => {
+    setIndexs({ ...indexs, [e.target.name]: e.target.value });
   };
 
-  const onUseMenuSelectChange = (
-    e: SelectChangeEvent<typeof showMenuIndex>
-  ) => {
-    setUseMenuIndex(e.target.value as number);
-  };
+  useEffect(() => {
+    onChange(indexs);
+  }, [indexs]);
 
   return (
     <Box className={classes.container}>
       <Select
         fullWidth
         size="small"
-        value={showMenuIndex}
-        onChange={onShowMenuSelectChange}
+        value={indexs.visible}
+        name="visible"
+        onChange={(e) => onChangeSelect(e)}
         inputProps={{ 'aria-label': 'Without label' }}
-        renderValue={showMenuIndex !== -1 ? null : () => <>메뉴노출여부</>}
       >
-        <MenuItem value={0}>메뉴노출여부 Y</MenuItem>
-        <MenuItem value={1}>메뉴노출여부 N</MenuItem>
+        <MenuItem value={0}>메뉴노출여부 </MenuItem>
+        <MenuItem value={1}>메뉴노출여부 Y</MenuItem>
+        <MenuItem value={2}>메뉴노출여부 N</MenuItem>
       </Select>
       <Select
         fullWidth
         size="small"
-        value={useMenuIndex}
-        onChange={onUseMenuSelectChange}
-        displayEmpty
+        name="use"
+        value={indexs.use}
+        onChange={(e) => onChangeSelect(e)}
         inputProps={{ 'aria-label': 'Without label' }}
-        renderValue={useMenuIndex !== -1 ? null : () => <>메뉴사용여부</>}
       >
-        <MenuItem value={0}>메뉴사용여부 Y</MenuItem>
-        <MenuItem value={1}>메뉴사용여부 N</MenuItem>
+        <MenuItem value={0}>메뉴사용여부</MenuItem>
+        <MenuItem value={1}>메뉴사용여부 Y</MenuItem>
+        <MenuItem value={2}>메뉴사용여부 N</MenuItem>
       </Select>
     </Box>
   );

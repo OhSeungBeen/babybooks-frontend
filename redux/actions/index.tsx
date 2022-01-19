@@ -1,7 +1,10 @@
-export * as AppAction from "./app";
-export * as PageAction from "./page";
-export * as TabsAction from "./tabs";
-export * as DialogAction from "./dialog";
+export * as AppAction from './app';
+export * as PageAction from './page';
+export * as TabsAction from './tabs';
+export * as DialogAction from './dialog';
+export * as CategoriesAction from './categories';
+export * as CategoryAction from './category';
+export * as LayoutCategoriesAction from './layoutCategories';
 
 export enum ActionType {
   APP_SHOW_SIDEBAR,

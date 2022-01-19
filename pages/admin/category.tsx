@@ -3,38 +3,38 @@ import { GetServerSideProps } from 'next';
 import { Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { resetServerContext } from 'react-beautiful-dnd';
-import AdminLayout from '../../components/admin/layout';
-import CategoryInfo from '../../components/admin/category/categoryInfo';
-import CategoryHeader from '../../components/admin/category/categoryHeader';
-import CategoryListFilter from '../../components/admin/category/categoryListFilter';
-import CategoryList from '../../components/admin/category/categoryList';
+import AdminLayout from 'components/admin/layout';
+import CategoryListContainer from 'container/admin/category/categoryListContainer';
+import CtegoryContainer from 'container/admin/category/categoryContainer';
 
 const useStyles = makeStyles({
-  categoryWrapper: {
+  container: {
     display: 'flex',
     justifyContent: 'space-between',
     gap: '1rem',
   },
-  categorySection: {
+  categoryList: {
     flex: 1,
+    padding: '1rem',
+    border: 'solid 1px',
+  },
+  cateogoryInfo: {
+    flex: 2,
     padding: '1rem',
     border: 'solid 1px',
   },
 });
 
-const category = () => {
+const CategoryPage = () => {
   const classes = useStyles();
 
   return (
-    <Box className={classes.categoryWrapper}>
-      <Box className={classes.categorySection}>
-        <CategoryHeader title="전시카테고리" buttonText="추가" />
-        <CategoryListFilter />
-        <CategoryList />
+    <Box className={classes.container}>
+      <Box className={classes.categoryList}>
+        <CategoryListContainer />
       </Box>
-      <Box className={classes.categorySection}>
-        <CategoryHeader title="카테고리 정보" buttonText="수정" />
-        <CategoryInfo />
+      <Box className={classes.cateogoryInfo}>
+        <CtegoryContainer />
       </Box>
     </Box>
   );
@@ -45,5 +45,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return { props: { data: [] } };
 };
 
-category.layout = AdminLayout;
-export default category;
+CategoryPage.layout = AdminLayout;
+export default CategoryPage;
