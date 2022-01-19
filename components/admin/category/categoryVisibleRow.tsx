@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React from 'react';
 import { Radio, FormControlLabel, RadioGroup, Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import CategoryRowItem from './categoryRowItem';
@@ -26,40 +26,23 @@ const useStyles = makeStyles({
 interface CategoryVisibleRowProps {
   visible: boolean;
   use: boolean;
-  onChange: (param: { visible: boolean; use: boolean }) => void;
+  onChange: (param: { name: string; value: boolean }) => void;
 }
 
 const CategoryVisibleRow: React.FC<CategoryVisibleRowProps> = ({
   visible,
   use,
-  onChange: onUpdate,
+  onChange,
 }) => {
   const classes = useStyles();
 
-  const mounted = useRef(false);
-
-  const [values, setValues] = useState({ visible, use });
-
-  const onChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
-      const boolValue = value === 'true';
-      setValues((prev) => ({ ...prev, [e.target.name]: boolValue }));
-    },
-    []
-  );
-
-  useEffect(() => {
-    setValues({ visible, use });
-  }, [use, visible]);
-
-  useEffect(() => {
-    if (!mounted.current) return;
-    onUpdate(values);
-  }, [values, onUpdate]);
-
-  useEffect(() => {
-    mounted.current = true;
-  }, []);
+  const onLocalChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    value: string
+  ) => {
+    const boolValue = value === 'true';
+    onChange({ name: e.target.name, value: boolValue });
+  };
 
   return (
     <Box className={classes.container}>
@@ -69,10 +52,10 @@ const CategoryVisibleRow: React.FC<CategoryVisibleRowProps> = ({
           content={
             <RadioGroup
               row
-              value={values.visible}
+              value={visible}
               className={classes.radioGroup}
               name="visible"
-              onChange={onChange}
+              onChange={onLocalChange}
             >
               <FormControlLabel
                 disabled={use ? false : true}
@@ -98,10 +81,10 @@ const CategoryVisibleRow: React.FC<CategoryVisibleRowProps> = ({
           content={
             <RadioGroup
               row
-              value={values.use}
+              value={use}
               name="use"
               className={classes.radioGroup}
-              onChange={onChange}
+              onChange={onLocalChange}
             >
               <FormControlLabel
                 value={true}

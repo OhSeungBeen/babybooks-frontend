@@ -1,12 +1,12 @@
 import React from 'react';
 import { Box, Typography, Button, Theme } from '@mui/material';
-import { makeStyles, propsToClassKey } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 
 interface CategoryHeaderProps {
   title: string;
   buttonText: string;
   description?: string;
-  onClickButton: () => void;
+  onOpen: () => void;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -33,7 +33,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
   title,
   buttonText,
   description,
-  onClickButton: onButtonClick,
+  onOpen,
 }) => {
   const classes = useStyles();
 
@@ -41,7 +41,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
     <>
       <Box className={classes.header}>
         <Typography>{title}</Typography>
-        <Button hidden variant="contained" onClick={onButtonClick}>
+        <Button hidden variant="contained" onClick={onOpen}>
           {buttonText}
         </Button>
       </Box>

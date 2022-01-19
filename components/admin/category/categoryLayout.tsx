@@ -8,7 +8,7 @@ import {
   DropResult,
   Draggable,
 } from 'react-beautiful-dnd';
-import { LayoutCategory } from 'pages/admin/category';
+import { LayoutCategory } from 'types';
 
 interface CategoryLayoutProps {
   categories: LayoutCategory[];

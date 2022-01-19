@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import {
   RadioGroup,
   FormControlLabel,
@@ -7,7 +7,6 @@ import {
   Radio,
   Button,
 } from '@mui/material';
-import {} from '@mui/icons-material';
 import { makeStyles } from '@mui/styles';
 
 interface TextImageInputProps {
@@ -16,10 +15,11 @@ interface TextImageInputProps {
   image: string;
   disabled?: boolean;
   name?: string;
-  onChange: (params: {
-    name: string;
-    values: { type: string; text: string; image: string };
-  }) => void;
+  onChange: (
+    name: string,
+    inputName: string,
+    value: string | 'text' | 'image'
+  ) => void;
 }
 
 const useStyles = makeStyles({
@@ -56,40 +56,21 @@ const TextImageInput: React.FC<TextImageInputProps> = ({
   name,
   onChange,
 }) => {
-  const mounted = useRef(false);
   const classes = useStyles();
 
-  const [values, setValues] = useState({ type, text, image });
-
-  const onValueChange = (
+  const onLocalChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    onChange(name, e.target.name, e.target.value);
   };
-
-  useEffect(() => {
-    setValues({ type, text, image });
-  }, [type, text, image]);
-
-  useEffect(() => {
-    if (!mounted.current) return;
-    onChange({
-      name: name || '',
-      values,
-    });
-  }, [values, name, onChange]);
-
-  useEffect(() => {
-    mounted.current = true;
-  }, []);
 
   return (
     <Box className={classes.container}>
       <RadioGroup
         row
-        value={values.type}
+        value={type}
         className={classes.radioGroup}
-        onChange={(e) => onValueChange(e)}
+        onChange={(e) => onLocalChange(e)}
         name="type"
       >
         <FormControlLabel
@@ -108,22 +89,22 @@ const TextImageInput: React.FC<TextImageInputProps> = ({
         ></FormControlLabel>
       </RadioGroup>
       <OutlinedInput
-        disabled={disabled || values.type === 'image'}
-        value={values.type === 'text' ? values.text : values.image}
-        onChange={(e) => onValueChange(e)}
+        disabled={disabled || type === 'image'}
+        value={type === 'text' ? text : image}
+        onChange={(e) => onLocalChange(e)}
         name="text"
       />
       <Button
         variant="contained"
         className={classes.button}
         component="label"
-        disabled={disabled || values.type === 'text'}
+        disabled={disabled || type === 'text'}
       >
         파일찾기
         <input
           type="file"
           hidden
-          onChange={(e) => onValueChange(e)}
+          onChange={(e) => onLocalChange(e)}
           name="image"
         />
       </Button>

@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { Box, Input } from '@mui/material';
+import { Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import CategoryRowItem from './categoryRowItem';
 
@@ -18,9 +17,6 @@ const useStyles = makeStyles({
   },
   item: {
     flex: 1,
-  },
-  nameInput: {
-    border: 'solid 1px',
   },
 });
 

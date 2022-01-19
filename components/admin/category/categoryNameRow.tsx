@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Box, OutlinedInput, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import CategoryRowItem from './categoryRowItem';
@@ -30,18 +30,6 @@ const CategoryNameRow: React.FC<CategoryNameRowProps> = ({
 }) => {
   const classes = useStyles();
 
-  const [value, setValue] = useState(name);
-
-  const onChangeInput = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setValue(e.target.value);
-  };
-
-  useEffect(() => {
-    onChange(value);
-  }, [value]);
-
   return (
     <Box className={classes.container}>
       <Box className={classes.item}>
@@ -54,7 +42,7 @@ const CategoryNameRow: React.FC<CategoryNameRowProps> = ({
             <OutlinedInput
               inputProps={{ maxLength: 20 }}
               value={name}
-              onChange={(e) => onChangeInput(e)}
+              onChange={(e) => onChange(e.target.value)}
             />
           }
         ></CategoryRowItem>

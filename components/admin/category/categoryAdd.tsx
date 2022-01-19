@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Typography,
@@ -15,7 +15,6 @@ import { makeStyles } from '@mui/styles';
 interface CategoryAddProps {
   open: boolean;
   placeholder: { input: string; header: string[] };
-  depth: number;
   onConfirm: () => void;
   onCancel: () => void;
 }

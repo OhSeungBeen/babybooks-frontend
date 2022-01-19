@@ -1,5 +1,6 @@
 import React from 'react';
-import { Category } from 'pages/admin/category';
+import { makeStyles } from '@mui/styles';
+import { Category } from 'types';
 import CustomTreeView from './customTreeView';
 import CustomTreeItem from './customTreeItem';
 
@@ -7,8 +8,6 @@ interface CateogryListProps {
   categories: Category[];
   onNodeSelect: (e: React.SyntheticEvent, id: Array<string> | string) => void;
 }
-
-import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
   treeView: {
