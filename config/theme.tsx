@@ -3,6 +3,18 @@ import { grey, red } from '@mui/material/colors';
 
 export const defaultTheme: Theme = createTheme({
   components: {
+    MuiTypography: {
+      defaultProps: {
+        fontFamily: `"Noto Sans KR", sans-serif`,
+      },
+    },
+    MuiButton: {
+      defaultProps: {
+        style: {
+          fontFamily: `"Noto Sans KR", sans-serif`,
+        },
+      },
+    },
     MuiTab: {
       styleOverrides: {
         root: {
@@ -32,3 +44,11 @@ export const defaultTheme: Theme = createTheme({
     },
   },
 });
+
+export const globalStyles = {
+  body: {
+    fontFamily: `"Noto Sans KR", sans-serif`,
+    margin: '0px',
+    padding: '0px',
+  },
+};

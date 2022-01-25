@@ -1,10 +1,11 @@
-import { ThemeProvider } from "@mui/private-theming";
-import { defaultTheme } from "config/theme";
-import { NextPage } from "next";
-import App, { AppContext, AppInitialProps, AppProps } from "next/app";
-import React, { useEffect } from "react";
-import { Provider, useStore } from "react-redux";
-import { wrapper } from "redux/store";
+import { GlobalStyles } from '@mui/material';
+import { ThemeProvider } from '@mui/private-theming';
+import { defaultTheme, globalStyles } from 'config/theme';
+import { NextPage } from 'next';
+import App, { AppContext, AppInitialProps, AppProps } from 'next/app';
+import React, { useEffect } from 'react';
+import { Provider, useStore } from 'react-redux';
+import { wrapper } from 'redux/store';
 
 export type NextPageWithLayout = NextPage & {
   layout?: () => JSX.Element;
@@ -28,7 +29,7 @@ function WrappedApp({ Component, pageProps }: WrappedAppProps) {
   }, []);
 
   const removeServerSideInjectedCSS = () => {
-    const jssStyles = document.querySelector("#jss-server-side");
+    const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
@@ -37,11 +38,10 @@ function WrappedApp({ Component, pageProps }: WrappedAppProps) {
   return (
     <Provider store={store}>
       <ThemeProvider theme={defaultTheme}>
-        <>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </>
+        <GlobalStyles styles={globalStyles} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeProvider>
     </Provider>
   );
