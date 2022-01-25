@@ -2,7 +2,7 @@ import { ArrowBackIosNew, ArrowForwardIos, Pause } from '@mui/icons-material';
 import { Box, IconButton, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 const sliderItem = [
   { id: 1, src: '/1.png' },
@@ -13,15 +13,15 @@ const sliderItem = [
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
     width: '100%',
-    height: '50vh',
+    height: 'calc(50vh + 2.25rem)',
     display: 'flex',
     position: 'relative',
-    overflowX: 'hidden',
+    overflow: 'hidden',
   },
   wrapper: {
-    height: '100%',
+    height: '50vh',
     display: 'flex',
-    // transition: 'all 1.5s ease',
+    transition: 'transform 1s ease',
     transform: ({ index }: { index: number }) =>
       `translateX(${index * -100}vw)`,
   },
@@ -35,10 +35,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    top: '100%',
+    top: '50vh',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    margin: 'auto',
     cursor: 'pointer',
     zIndex: '2',
   },
@@ -72,11 +71,37 @@ const Slider: React.FC = () => {
   const [index, setIndex] = useState(0);
   const classes = useStyles({ index });
 
+  const timeout = useRef(null);
+
+  useEffect(() => {
+    console.log('a');
+    console.log(timeout.current);
+    const nextSlide = () => {
+      setIndex(index < sliderItem.length - 1 ? index + 1 : 0);
+    };
+    timeout.current = setTimeout(nextSlide, 2000);
+
+    return () => {
+      if (timeout.current) {
+        clearTimeout(timeout.current);
+      }
+    };
+  }, [timeout.current]);
+
   const onSlide = (direction: string) => {
+    if (timeout.current) {
+      clearTimeout(timeout.current);
+    }
     if (direction === 'left') {
       setIndex(index > 0 ? index - 1 : sliderItem.length - 1);
     } else if (direction === 'right') {
-      setIndex((prev) => (prev < sliderItem.length - 1 ? prev + 1 : 0));
+      setIndex(index < sliderItem.length - 1 ? index + 1 : 0);
+    }
+  };
+
+  const onPause = () => {
+    if (timeout.current) {
+      clearTimeout(timeout.current);
     }
   };
 
@@ -86,7 +111,10 @@ const Slider: React.FC = () => {
         <IconButton className={classes.button} onClick={() => onSlide('left')}>
           <ArrowBackIosNew />
         </IconButton>
-        <IconButton className={`${classes.button} ${classes.pause}`}>
+        <IconButton
+          className={`${classes.button} ${classes.pause}`}
+          onClick={onPause}
+        >
           <Pause />
         </IconButton>
         <IconButton className={classes.button} onClick={() => onSlide('right')}>

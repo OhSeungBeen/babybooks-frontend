@@ -91,6 +91,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     '& button': {
       color: theme.palette.primary.main,
     },
+    '& h5': {
+      fontWeight: '600',
+    },
   },
   card: {
     borderRadius: '10px',

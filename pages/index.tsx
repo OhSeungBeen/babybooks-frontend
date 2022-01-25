@@ -1,6 +1,7 @@
-import { Container, Typography } from '@mui/material';
+import { Container } from '@mui/material';
 import Footer from 'components/base/footer';
 import Header from 'components/base/header';
+import Event from 'components/home/event';
 import Exhibition from 'components/home/exhibition';
 import Recommand from 'components/home/recommand';
 import RecommandMonth from 'components/home/recommandMonth';
@@ -19,6 +20,7 @@ const HomePage = () => {
           <RecommandMonth />
           <Recommand />
           <Exhibition />
+          <Event />
         </HomeLayout>
       </Container>
       <Footer />

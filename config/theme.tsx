@@ -8,6 +8,13 @@ export const defaultTheme: Theme = createTheme({
         fontFamily: `"Noto Sans KR", sans-serif`,
       },
     },
+    MuiButton: {
+      defaultProps: {
+        style: {
+          fontFamily: `"Noto Sans KR", sans-serif`,
+        },
+      },
+    },
     MuiTab: {
       styleOverrides: {
         root: {
@@ -41,7 +48,6 @@ export const defaultTheme: Theme = createTheme({
 export const globalStyles = {
   body: {
     fontFamily: `"Noto Sans KR", sans-serif`,
-    boxSizing: 'border-box',
     margin: '0px',
     padding: '0px',
   },

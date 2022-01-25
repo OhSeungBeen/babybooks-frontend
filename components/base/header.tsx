@@ -1,4 +1,4 @@
-import { Search, PersonOutline, Lock } from '@mui/icons-material';
+import { Search, PersonOutline, LockOutlined } from '@mui/icons-material';
 import {
   AppBar,
   Toolbar,
@@ -35,7 +35,7 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     '& button': {
-      fontWeight: '600',
+      fontWeight: '500',
       color: '#000',
     },
   },
@@ -95,7 +95,7 @@ const Header: React.FC = () => {
                 <PersonOutline />
               </IconButton>
               <IconButton>
-                <Lock />
+                <LockOutlined />
               </IconButton>
             </Box>
           </Box>
