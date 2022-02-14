@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Typography, Button, Theme } from '@mui/material';
+
+import { Box, Button, Theme, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 interface CategoryHeaderProps {

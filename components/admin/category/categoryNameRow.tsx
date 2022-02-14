@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { Box, OutlinedInput, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+
 import CategoryRowItem from './categoryRowItem';
 
 interface CategoryNameRowProps {

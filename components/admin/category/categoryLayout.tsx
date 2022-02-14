@@ -1,14 +1,15 @@
 import React from 'react';
-import { Box, Theme, Typography, Button, IconButton } from '@mui/material';
-import { Close } from '@mui/icons-material';
-import { makeStyles } from '@mui/styles';
 import {
   DragDropContext,
-  Droppable,
-  DropResult,
   Draggable,
+  DropResult,
+  Droppable,
 } from 'react-beautiful-dnd';
 import { LayoutCategory } from 'types';
+
+import { Close } from '@mui/icons-material';
+import { Box, Button, IconButton, Theme, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 interface CategoryLayoutProps {
   categories: LayoutCategory[];

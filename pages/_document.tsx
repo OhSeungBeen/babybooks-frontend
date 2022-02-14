@@ -1,9 +1,7 @@
-/**
- * SSR 하는 과정에 오류 발생으로 추가
- */
-import { ServerStyleSheets } from '@mui/styles';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 import React from 'react';
+
+import { ServerStyleSheets } from '@mui/styles';
 
 export default class MyDocument extends Document {
   render() {

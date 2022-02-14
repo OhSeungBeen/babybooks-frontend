@@ -1,10 +1,12 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Box, Tabs, Theme, IconButton } from '@mui/material';
-import { Menu, ChevronLeft } from '@mui/icons-material';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { ChevronLeft, Menu } from '@mui/icons-material';
+import { Box, IconButton, Tabs, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+
+import { AppAction, TabsAction } from '../../../../redux/actions';
 import { State } from '../../../../types';
-import { TabsAction, AppAction } from '../../../../redux/actions';
 import { TabInfo } from '../../../../types';
 import LinkTab from './linkTab';
 

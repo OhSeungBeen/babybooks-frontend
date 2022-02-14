@@ -1,10 +1,12 @@
 import React from 'react';
-import { State } from '../../../types';
-import { useSelector, useDispatch } from 'react-redux';
-import { Box, Button, Breadcrumbs, Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Star, StarBorder } from '@mui/icons-material';
+import { Box, Breadcrumbs, Button, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+
 import { PageAction } from '../../../redux/actions';
+import { State } from '../../../types';
 
 const useStyles = makeStyles(() => ({
   container: {

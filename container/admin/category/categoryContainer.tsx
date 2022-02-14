@@ -1,29 +1,29 @@
-import React, { useCallback } from 'react';
-import { DropResult } from 'react-beautiful-dnd';
-import { connectState } from 'redux/store';
-import { ComponentProps } from 'types';
-import {
-  changeName,
-  setVisible,
-  setUse,
-  setMenuType,
-  setMenuText,
-  setMenuImage,
-  setTitleType,
-  setTitleText,
-  setTitleImage,
-} from 'redux/actions/category';
-import CategoryVisibleRow from 'components/admin/category/categoryVisibleRow';
-import CategoryNameRow from 'components/admin/category/categoryNameRow';
-import CategoryRowItem from 'components/admin/category/categoryRowItem';
 import CategoryDateRow from 'components/admin/category/categoryDateRow';
-import CategoryVisibleTypeRow from 'components/admin/category/categoryVisibleTypeRow';
 import CategoryHeader from 'components/admin/category/categoryHeader';
 import CategoryLayout from 'components/admin/category/categoryLayout';
+import CategoryNameRow from 'components/admin/category/categoryNameRow';
+import CategoryRowItem from 'components/admin/category/categoryRowItem';
+import CategoryVisibleRow from 'components/admin/category/categoryVisibleRow';
+import CategoryVisibleTypeRow from 'components/admin/category/categoryVisibleTypeRow';
+import React, { useCallback } from 'react';
+import { DropResult } from 'react-beautiful-dnd';
+import {
+  changeName,
+  setMenuImage,
+  setMenuText,
+  setMenuType,
+  setTitleImage,
+  setTitleText,
+  setTitleType,
+  setUse,
+  setVisible,
+} from 'redux/actions/category';
 import {
   deleteLayoutCategories,
   editLayoutOrder,
 } from 'redux/actions/layoutCategories';
+import { connectState } from 'redux/store';
+import { ComponentProps } from 'types';
 
 const CategoryContainer: React.FC<ComponentProps> = ({ state, dispatch }) => {
   const category = state.category;

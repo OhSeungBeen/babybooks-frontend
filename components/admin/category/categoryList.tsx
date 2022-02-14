@@ -1,8 +1,10 @@
 import React from 'react';
-import { makeStyles } from '@mui/styles';
 import { Category } from 'types';
-import CustomTreeView from './customTreeView';
+
+import { makeStyles } from '@mui/styles';
+
 import CustomTreeItem from './customTreeItem';
+import CustomTreeView from './customTreeView';
 
 interface CateogryListProps {
   categories: Category[];

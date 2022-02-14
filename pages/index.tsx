@@ -1,4 +1,3 @@
-import { Container } from '@mui/material';
 import Footer from 'components/base/footer';
 import Header from 'components/base/header';
 import Event from 'components/home/event';
@@ -8,6 +7,8 @@ import RecommandMonth from 'components/home/recommandMonth';
 import Slider from 'components/home/slider';
 import HomeLayout from 'components/layout/home';
 import React from 'react';
+
+import { Container } from '@mui/material';
 
 const HomePage = () => {
   return (

@@ -1,8 +1,9 @@
+import Image from 'next/image';
+import React, { useEffect, useRef, useState } from 'react';
+
 import { ArrowBackIosNew, ArrowForwardIos, Pause } from '@mui/icons-material';
 import { Box, IconButton, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import Image from 'next/image';
-import React, { useState, useRef, useEffect } from 'react';
 
 const sliderItem = [
   { id: 1, src: '/1.png' },
@@ -74,8 +75,6 @@ const Slider: React.FC = () => {
   const timeout = useRef(null);
 
   useEffect(() => {
-    console.log('a');
-    console.log(timeout.current);
     const nextSlide = () => {
       setIndex(index < sliderItem.length - 1 ? index + 1 : 0);
     };

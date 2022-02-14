@@ -1,7 +1,8 @@
-import { Box, Container, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import Link from 'next/link';
 import React from 'react';
+
+import { Box, Container, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
   footer: {

@@ -1,15 +1,16 @@
+import clsx from 'clsx';
 import React from 'react';
-import { Theme, Typography } from '@mui/material';
+
 import { TreeItem } from '@mui/lab';
 import {
+  TreeItemContentProps,
   TreeItemProps,
   treeItemClasses,
   useTreeItem,
-  TreeItemContentProps,
 } from '@mui/lab/TreeItem';
-import { makeStyles } from '@mui/styles';
+import { Theme, Typography } from '@mui/material';
 import { alpha } from '@mui/material/styles';
-import clsx from 'clsx';
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
   treeItem: {

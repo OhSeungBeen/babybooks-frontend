@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Drawer, Box, Theme, Tabs, Tab } from '@mui/material';
+
+import { Box, Drawer, Tab, Tabs, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import MenuTab from './menuTab';
+
 import FavoritesTab from './favoritesTab';
+import MenuTab from './menuTab';
 
 export interface TabPanelProps {
   children?: React.ReactNode;

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+
 import { Button } from '@mui/material';
+
 import FavoritesList from './favoritesList';
 
 const FavoritesTab: React.FC = () => {

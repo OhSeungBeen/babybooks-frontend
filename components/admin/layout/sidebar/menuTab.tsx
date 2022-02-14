@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { OutlinedInput, InputAdornment, Typography, Box } from '@mui/material';
+
 import { Search } from '@mui/icons-material';
+import { Box, InputAdornment, OutlinedInput, Typography } from '@mui/material';
+
 import MenuList from './menuList';
 
 // DUMY DATA

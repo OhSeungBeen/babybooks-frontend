@@ -1,8 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Tab, Box, Typography } from '@mui/material';
+
 import { Close } from '@mui/icons-material';
+import { Box, Tab, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+
 import { TabsAction } from '../../../../redux/actions';
 import { TabInfo } from '../../../../types';
 import PlainLink from '../../../common/plainLink';

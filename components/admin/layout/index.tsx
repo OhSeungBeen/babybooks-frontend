@@ -1,18 +1,19 @@
-import {
-  CssBaseline,
-  ThemeProvider,
-  Theme,
-  Box,
-  Container,
-} from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import { ADMIN_PAGE_TITLE } from 'config/strings';
 import { defaultTheme } from 'config/theme';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import React from 'react';
 import { connectState } from 'redux/store';
-import { SideBarInfo, ComponentProps } from 'types';
+import { ComponentProps, SideBarInfo } from 'types';
+
+import {
+  Box,
+  Container,
+  CssBaseline,
+  Theme,
+  ThemeProvider,
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 const Header = dynamic(() => import('./header'));
 const SideBar = dynamic(() => import('./sidebar'));
@@ -89,10 +90,7 @@ const AdminLayout: React.FC<ComponentProps> = ({ state, children }) => {
             <Box className={classes.content}>
               <TabBar />
               <Navigation />
-              <Container
-                fixed
-                sx={{ border: '3px solid red', minWidth: '950px' }}
-              >
+              <Container fixed sx={{ minWidth: '950px' }}>
                 {children}
               </Container>
             </Box>

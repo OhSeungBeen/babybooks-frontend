@@ -1,15 +1,16 @@
-import { Search, PersonOutline, LockOutlined } from '@mui/icons-material';
+import React from 'react';
+
+import { LockOutlined, PersonOutline, Search } from '@mui/icons-material';
 import {
   AppBar,
-  Toolbar,
-  Typography,
-  Container,
   Box,
   Button,
+  Container,
   IconButton,
+  Toolbar,
+  Typography,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React from 'react';
 
 const useStyles = makeStyles({
   appBar: {

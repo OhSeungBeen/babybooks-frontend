@@ -1,9 +1,11 @@
-import React from 'react';
 import { GetServerSideProps } from 'next';
-import {} from '@mui/material';
-import {} from '@mui/icons-material';
-import { makeStyles } from '@mui/styles';
+import React from 'react';
 import { resetServerContext } from 'react-beautiful-dnd';
+
+import '@mui/icons-material';
+import '@mui/material';
+import { makeStyles } from '@mui/styles';
+
 import AdminLayout from '../../components/admin/layout';
 
 const useStyles = makeStyles({});

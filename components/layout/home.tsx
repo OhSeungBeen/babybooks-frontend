@@ -1,6 +1,7 @@
+import React from 'react';
+
 import { Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React from 'react';
 
 interface HomeProps {
   children: React.ReactNode;

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
+
 import { List } from '@mui/material';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+
 import FavoritesItem from './favoritesItem';
 
 // DUMY DATA

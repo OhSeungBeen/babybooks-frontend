@@ -1,11 +1,12 @@
-import React from 'react';
+import AdminLayout from 'components/admin/layout';
+import CtegoryContainer from 'container/admin/category/categoryContainer';
+import CategoryListContainer from 'container/admin/category/categoryListContainer';
 import { GetServerSideProps } from 'next';
+import React from 'react';
+import { resetServerContext } from 'react-beautiful-dnd';
+
 import { Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { resetServerContext } from 'react-beautiful-dnd';
-import AdminLayout from 'components/admin/layout';
-import CategoryListContainer from 'container/admin/category/categoryListContainer';
-import CtegoryContainer from 'container/admin/category/categoryContainer';
 
 const useStyles = makeStyles({
   container: {

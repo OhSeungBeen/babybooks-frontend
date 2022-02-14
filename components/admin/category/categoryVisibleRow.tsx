@@ -1,6 +1,8 @@
 import React from 'react';
-import { Radio, FormControlLabel, RadioGroup, Box } from '@mui/material';
+
+import { Box, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+
 import CategoryRowItem from './categoryRowItem';
 
 const useStyles = makeStyles({

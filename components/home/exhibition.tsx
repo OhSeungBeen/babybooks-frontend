@@ -1,17 +1,18 @@
+import React, { useEffect, useState } from 'react';
+import Carousel from 'react-material-ui-carousel';
+
 import { ArrowForwardIos, HorizontalRule } from '@mui/icons-material';
 import {
   Box,
-  Typography,
   Button,
-  Theme,
   Card,
   CardActionArea,
-  CardMedia,
   CardContent,
+  CardMedia,
+  Theme,
+  Typography,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React, { useEffect, useState } from 'react';
-import Carousel from 'react-material-ui-carousel';
 
 const books = [
   {

@@ -1,5 +1,5 @@
-import React, { HTMLProps } from 'react';
 import Link from 'next/link';
+import React, { HTMLProps } from 'react';
 
 type PlainLinkProps = HTMLProps<HTMLAnchorElement> & {
   disabled?: boolean;

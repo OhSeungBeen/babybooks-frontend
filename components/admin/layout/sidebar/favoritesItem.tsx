@@ -1,4 +1,7 @@
 import React from 'react';
+import { Draggable } from 'react-beautiful-dnd';
+
+import { Delete } from '@mui/icons-material';
 import {
   IconButton,
   ListItem,
@@ -6,9 +9,7 @@ import {
   ListItemText,
   Theme,
 } from '@mui/material';
-import { Delete } from '@mui/icons-material';
 import { makeStyles } from '@mui/styles';
-import { Draggable } from 'react-beautiful-dnd';
 
 const useStyles = makeStyles((theme: Theme) => ({
   draggingListButton: {

@@ -1,10 +1,11 @@
 import React from 'react';
-import { Theme } from '@mui/material';
+
 import { TreeView } from '@mui/lab';
 import { TreeViewProps } from '@mui/lab/TreeView';
+import { Theme } from '@mui/material';
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 import { alpha } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
-import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 
 const useStyles = makeStyles((theme: Theme) => ({
   endIcon: {

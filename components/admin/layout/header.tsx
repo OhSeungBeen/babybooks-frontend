@@ -1,9 +1,9 @@
-import { AppBar, Box, Theme, Toolbar } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import { ADMIN_MANAGE_ACCOUNT, LOGOUT } from 'config/strings';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { connectState } from 'redux/store';
 import { ComponentProps } from 'types';
+
+import { AppBar, Box, Theme, Toolbar } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 // import PlainLink from '../../common/plainLink';
 

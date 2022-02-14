@@ -1,4 +1,5 @@
 import React from 'react';
+
 import CategoryRowItem from './categoryRowItem';
 import TextImageInput from './textImageInput';
 

@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
+
+import { Add, Close } from '@mui/icons-material';
 import {
   Box,
-  Typography,
-  Dialog,
-  IconButton,
   Button,
+  Dialog,
+  Divider,
+  IconButton,
   OutlinedInput,
   Theme,
-  Divider,
+  Typography,
 } from '@mui/material';
-import { Close, Add } from '@mui/icons-material';
 import { makeStyles } from '@mui/styles';
 
 interface CategoryAddProps {
