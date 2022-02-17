@@ -1,14 +1,15 @@
 import React from 'react';
-import { Category } from 'types';
 
 import { makeStyles } from '@mui/styles';
 
+import { Category } from '../../../modules/categories';
 import CustomTreeItem from './customTreeItem';
 import CustomTreeView from './customTreeView';
 
 interface CateogryListProps {
   categories: Category[];
   onNodeSelect: (e: React.SyntheticEvent, id: Array<string> | string) => void;
+  selectedId: string;
 }
 
 const useStyles = makeStyles({
@@ -24,6 +25,7 @@ const useStyles = makeStyles({
 const CategoryList: React.FC<CateogryListProps> = ({
   categories,
   onNodeSelect,
+  selectedId,
 }) => {
   const classes = useStyles();
 
@@ -40,11 +42,12 @@ const CategoryList: React.FC<CateogryListProps> = ({
 
   return (
     <CustomTreeView
-      defaultExpanded={['root']}
+      defaultExpanded={['0']}
       className={classes.treeView}
       onNodeSelect={onNodeSelect}
+      selected={selectedId}
     >
-      <CustomTreeItem nodeId="root" label={'전체 카테고리'}>
+      <CustomTreeItem nodeId="0" label={'전체 카테고리'}>
         {renderCategoryTree(categories)}
       </CustomTreeItem>
     </CustomTreeView>

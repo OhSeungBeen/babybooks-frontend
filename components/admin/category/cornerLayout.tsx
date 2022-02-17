@@ -5,14 +5,15 @@ import {
   DropResult,
   Droppable,
 } from 'react-beautiful-dnd';
-import { LayoutCategory } from 'types';
 
 import { Close } from '@mui/icons-material';
 import { Box, Button, IconButton, Theme, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
-interface CategoryLayoutProps {
-  categories: LayoutCategory[];
+import { Coner } from '../../../modules/coners';
+
+interface CornerLayoutProps {
+  corners: Coner[];
   onDragEnd: ({ destination, source }: DropResult) => void;
   onDelete: (index: number) => void;
 }
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       fontSize: '0.775rem',
     },
   },
-  category: {
+  corner: {
     minHeight: '3rem',
     display: 'flex',
     justifyContent: 'center',
@@ -75,8 +76,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const CategoryLayout: React.FC<CategoryLayoutProps> = ({
-  categories,
+const CornerLayout: React.FC<CornerLayoutProps> = ({
+  corners,
   onDragEnd,
   onDelete,
 }) => {
@@ -90,29 +91,29 @@ const CategoryLayout: React.FC<CategoryLayoutProps> = ({
         </Typography>
         <Button variant="contained">등록</Button>
       </Box>
-      <Box className={classes.category}>
+      <Box className={classes.corner}>
         <Typography>타이틀(고정)</Typography>
       </Box>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided) => (
             <Box ref={provided.innerRef}>
-              {Array.isArray(categories) && categories.length > 0 ? (
-                categories.map((category, index) => (
+              {Array.isArray(corners) && corners.length > 0 ? (
+                corners.map((corner, index) => (
                   <Draggable
-                    key={category.id}
+                    key={corner.id}
                     index={index}
-                    draggableId={category.id}
+                    draggableId={corner.id}
                   >
                     {(provided, snapshot) => (
                       <Box
-                        key={category.id}
-                        className={classes.category}
+                        key={corner.id}
+                        className={classes.corner}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                       >
-                        <Typography>{category.name}</Typography>
+                        <Typography>{corner.name}</Typography>
                         <IconButton onClick={() => onDelete(index)}>
                           <Close />
                         </IconButton>
@@ -121,7 +122,7 @@ const CategoryLayout: React.FC<CategoryLayoutProps> = ({
                   </Draggable>
                 ))
               ) : (
-                <Box className={`${classes.category} ${classes.none}`}>
+                <Box className={`${classes.corner} ${classes.none}`}>
                   <Typography>전시코너를 등록해주세요.</Typography>
                 </Box>
               )}
@@ -134,4 +135,4 @@ const CategoryLayout: React.FC<CategoryLayoutProps> = ({
   );
 };
 
-export default CategoryLayout;
+export default CornerLayout;

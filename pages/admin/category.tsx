@@ -1,12 +1,13 @@
-import AdminLayout from 'components/admin/layout';
-import CtegoryContainer from 'container/admin/category/categoryContainer';
-import CategoryListContainer from 'container/admin/category/categoryListContainer';
 import { GetServerSideProps } from 'next';
 import React from 'react';
 import { resetServerContext } from 'react-beautiful-dnd';
 
 import { Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+
+import AdminDefaultLayout from '../../components/admin/layout/adminDefaultLayout';
+import CategoryContainer from '../../container/admin/category/categoryContainer';
+import CategoryListContainer from '../../container/admin/category/categoryListContainer';
 
 const useStyles = makeStyles({
   container: {
@@ -35,7 +36,7 @@ const CategoryPage = () => {
         <CategoryListContainer />
       </Box>
       <Box className={classes.cateogoryInfo}>
-        <CtegoryContainer />
+        <CategoryContainer />
       </Box>
     </Box>
   );
@@ -46,5 +47,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return { props: { data: [] } };
 };
 
-CategoryPage.layout = AdminLayout;
+CategoryPage.layout = AdminDefaultLayout;
 export default CategoryPage;

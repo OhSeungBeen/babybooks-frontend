@@ -1,6 +1,4 @@
 import React from 'react';
-import { connectState } from 'redux/store';
-import { ComponentProps } from 'types';
 
 import { Box, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -19,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Footer: React.FC<ComponentProps> = ({}) => {
+const Footer: React.FC = ({}) => {
   const classes = useStyles();
 
   return (
@@ -29,4 +27,4 @@ const Footer: React.FC<ComponentProps> = ({}) => {
   );
 };
 
-export default connectState(Footer);
+export default Footer;

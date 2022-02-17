@@ -6,6 +6,7 @@ import { makeStyles } from '@mui/styles';
 interface CategoryHeaderProps {
   title: string;
   buttonText: string;
+  buttonVisible: boolean;
   description?: string;
   onOpen: () => void;
 }
@@ -16,6 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: '0.5rem',
+    minHeight: '2.5rem',
     '& p': {
       fontWeight: 'bold',
     },
@@ -34,6 +36,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
   title,
   buttonText,
   description,
+  buttonVisible,
   onOpen,
 }) => {
   const classes = useStyles();
@@ -42,9 +45,11 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({
     <>
       <Box className={classes.header}>
         <Typography>{title}</Typography>
-        <Button hidden variant="contained" onClick={onOpen}>
-          {buttonText}
-        </Button>
+        {buttonVisible && (
+          <Button hidden variant="contained" onClick={onOpen}>
+            {buttonText}
+          </Button>
+        )}
       </Box>
       {description && (
         <Box className={classes.description}>

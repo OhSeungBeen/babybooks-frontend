@@ -5,17 +5,10 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { Collapse, ListItemButton, ListItemText } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
-import { TabsAction } from '../../../../redux/actions';
+import { addTab } from '../../../../modules/tabs';
 import PlainLink from '../../../common/plainLink';
 import MenuList from './menuList';
-
-export interface Menu {
-  id: string;
-  name: string;
-  depth: number;
-  children?: Menu[];
-  url?: string;
-}
+import { Menu } from './menuTab';
 
 export interface MenuItemProps {
   menu: Menu;
@@ -34,13 +27,14 @@ const useStyles = makeStyles({
       return {
         [selector]: {
           fontSize: '16px',
-          fontWeight: '600',
+          fontWeight: 'bold',
         },
       };
     } else if (depth === 2) {
       return {
         [selector]: {
           fontSize: '14px',
+          fontWeight: 'bold',
           marginLeft: '6px',
         },
       };
@@ -70,18 +64,18 @@ const MenuItem: React.FC<MenuItemProps> = ({ menu, selected, onSelected }) => {
         setExpand((prevExpand) => !prevExpand);
       } else {
         dispatch(
-          TabsAction.addTab({
+          addTab({
             id: menu.id,
-            label: menu.name,
+            title: menu.name,
             url: menu.url,
           })
         );
       }
     } else if (menu.depth === 3) {
       dispatch(
-        TabsAction.addTab({
+        addTab({
           id: menu.id,
-          label: menu.name,
+          title: menu.name,
           url: menu.url,
         })
       );
@@ -93,6 +87,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ menu, selected, onSelected }) => {
         <ListItemButton divider={true} onClick={onListButtonClick}>
           <ListItemText primary={menu.name} className={classes.listItemText} />
           {Array.isArray(menu.children) &&
+            menu.children.length > 0 &&
             ((menu.depth === 1 ? selected : expand) ? (
               <ExpandLess />
             ) : (

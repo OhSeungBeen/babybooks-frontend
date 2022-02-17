@@ -1,16 +1,17 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Close } from '@mui/icons-material';
 import { Box, Tab, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
-import { TabsAction } from '../../../../redux/actions';
-import { TabInfo } from '../../../../types';
+import { deleteTab } from '../../../../modules/tabs';
 import PlainLink from '../../../common/plainLink';
 
-export interface LinkTabProps {
-  tab: TabInfo;
+interface LinkTabPorps {
+  index: number;
+  title: string;
+  url: string;
 }
 
 const useStyles = makeStyles({
@@ -22,23 +23,25 @@ const useStyles = makeStyles({
 });
 
 const LinkTab: React.FC<any> = (props) => {
-  const { tab } = props;
   const classes = useStyles();
 
   const dispatch = useDispatch();
-  const onDeleteTab = (e: React.SyntheticEvent, tab: TabInfo) => {
+
+  const onDeleteTab = (e: React.SyntheticEvent, index: number) => {
+    e.persist();
+    e.nativeEvent.stopImmediatePropagation();
     e.stopPropagation();
-    dispatch(TabsAction.deleteTab(tab.id));
+    dispatch(deleteTab(index));
   };
 
   return (
-    <PlainLink href={tab.url}>
+    <PlainLink href={props.url}>
       <Tab
         {...props}
         label={
           <Box className={classes.labelContainer}>
-            <Typography variant="body2">{tab.label}</Typography>
-            <Close onClick={(e) => onDeleteTab(e, tab)} />
+            <Typography variant="body2">{props.title}</Typography>
+            <Close onClick={(e) => onDeleteTab(e, props.index)} />
           </Box>
         }
       />

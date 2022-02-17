@@ -1,6 +1,4 @@
 import React from 'react';
-import { connectState } from 'redux/store';
-import { ComponentProps } from 'types';
 
 import { AppBar, Box, Theme, Toolbar } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -27,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Header: React.FC<ComponentProps> = ({}) => {
+const Header: React.FC = ({}) => {
   const classes = useStyles();
 
   return (
@@ -49,4 +47,4 @@ const Header: React.FC<ComponentProps> = ({}) => {
   );
 };
 
-export default connectState(Header);
+export default Header;

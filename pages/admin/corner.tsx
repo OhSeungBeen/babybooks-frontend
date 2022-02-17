@@ -6,7 +6,7 @@ import '@mui/icons-material';
 import '@mui/material';
 import { makeStyles } from '@mui/styles';
 
-import AdminLayout from '../../components/admin/layout';
+import AdminLayoutDefaultLayout from '../../components/admin/layout/adminDefaultLayout';
 
 const useStyles = makeStyles({});
 
@@ -21,5 +21,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return { props: { data: [] } };
 };
 
-CornerPage.layout = AdminLayout;
+CornerPage.layout = AdminLayoutDefaultLayout;
 export default CornerPage;

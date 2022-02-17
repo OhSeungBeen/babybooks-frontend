@@ -5,9 +5,9 @@ import { ChevronLeft, Menu } from '@mui/icons-material';
 import { Box, IconButton, Tabs, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
-import { AppAction, TabsAction } from '../../../../redux/actions';
-import { State } from '../../../../types';
-import { TabInfo } from '../../../../types';
+import { RootState } from '../../../../modules';
+import { setShowSideBar } from '../../../../modules/app';
+import { Tab, changeTab } from '../../../../modules/tabs';
 import LinkTab from './linkTab';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -21,41 +21,40 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const TabBar: React.FC = () => {
+const LinkTabBar: React.FC = () => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
-  const sidebar = useSelector((state: State) => state.app.sideBar);
-  const tabs = useSelector((state: State) => state.tabs);
+  const sideBar = useSelector((state: RootState) => state.app.sideBar);
+  const tabs = useSelector((state: RootState) => state.tabs);
 
-  const onTabsChange = (e: React.SyntheticEvent, index: number) => {
-    dispatch(TabsAction.changeTab(index));
+  const onChangeTab = (e: React.SyntheticEvent, index: number) => {
+    dispatch(changeTab(index));
   };
 
-  const onSidebarClick = () => {
-    sidebar.isShow = !sidebar.isShow;
-    dispatch(AppAction.setSideBar(sidebar));
+  const onClickSidebar = () => {
+    dispatch(setShowSideBar(!sideBar.isShow));
   };
 
   return (
     <Box className={classes.tabBarContainer}>
-      <IconButton onClick={onSidebarClick} className={classes.sidebarButton}>
-        {sidebar.isShow ? <ChevronLeft /> : <Menu />}
+      <IconButton onClick={onClickSidebar} className={classes.sidebarButton}>
+        {sideBar.isShow ? <ChevronLeft /> : <Menu />}
       </IconButton>
       <Tabs
         value={tabs.index}
-        onChange={onTabsChange}
+        onChange={onChangeTab}
         variant="scrollable"
         scrollButtons="auto"
         selectionFollowsFocus
         allowScrollButtonsMobile
       >
-        {tabs.items.map((tab: TabInfo, index: number) => (
-          <LinkTab key={index} tab={tab} />
+        {tabs.data.map((tab: Tab, index: number) => (
+          <LinkTab key={index} url={tab.url} index={index} title={tab.title} />
         ))}
       </Tabs>
     </Box>
   );
 };
 
-export default TabBar;
+export default LinkTabBar;

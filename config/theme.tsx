@@ -1,5 +1,5 @@
 import { Theme, createTheme } from '@mui/material';
-import { grey, red } from '@mui/material/colors';
+import { common, grey, red } from '@mui/material/colors';
 
 export const defaultTheme: Theme = createTheme({
   components: {
@@ -18,8 +18,10 @@ export const defaultTheme: Theme = createTheme({
     MuiTab: {
       styleOverrides: {
         root: {
+          color: common.black,
           '&.Mui-selected': {
             backgroundColor: grey.A400,
+            color: common.black,
           },
         },
       },

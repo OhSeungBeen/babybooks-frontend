@@ -3,7 +3,9 @@ import dynamic from 'next/dynamic';
 import React from 'react';
 import { resetServerContext } from 'react-beautiful-dnd';
 
-const AdminLayout = dynamic(() => import('components/admin/layout'));
+const AdminLayout = dynamic(
+  () => import('components/admin/layout/adminDefaultLayout')
+);
 
 const AdminPage = () => {
   return <></>;

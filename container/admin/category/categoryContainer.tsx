@@ -1,12 +1,15 @@
-import CategoryDateRow from 'components/admin/category/categoryDateRow';
-import CategoryHeader from 'components/admin/category/categoryHeader';
-import CategoryLayout from 'components/admin/category/categoryLayout';
-import CategoryNameRow from 'components/admin/category/categoryNameRow';
-import CategoryRowItem from 'components/admin/category/categoryRowItem';
-import CategoryVisibleRow from 'components/admin/category/categoryVisibleRow';
-import CategoryVisibleTypeRow from 'components/admin/category/categoryVisibleTypeRow';
+import { RootState } from 'modules';
 import React, { useCallback } from 'react';
 import { DropResult } from 'react-beautiful-dnd';
+import { useDispatch, useSelector } from 'react-redux';
+
+import CategoryDateRow from '../../../components/admin/category/categoryDateRow';
+import CategoryHeader from '../../../components/admin/category/categoryHeader';
+import CategoryNameRow from '../../../components/admin/category/categoryNameRow';
+import CategoryRowItem from '../../../components/admin/category/categoryRowItem';
+import CategoryVisibleRow from '../../../components/admin/category/categoryVisibleRow';
+import CategoryVisibleTypeRow from '../../../components/admin/category/categoryVisibleTypeRow';
+import ConerLayout from '../../../components/admin/category/cornerLayout';
 import {
   changeName,
   setMenuImage,
@@ -17,17 +20,14 @@ import {
   setTitleType,
   setUse,
   setVisible,
-} from 'redux/actions/category';
-import {
-  deleteLayoutCategories,
-  editLayoutOrder,
-} from 'redux/actions/layoutCategories';
-import { connectState } from 'redux/store';
-import { ComponentProps } from 'types';
+} from '../../../modules/category';
+import { deleteCorner, editLayoutOrder } from '../../../modules/coners';
 
-const CategoryContainer: React.FC<ComponentProps> = ({ state, dispatch }) => {
-  const category = state.category;
-  const layoutCategories = state.layoutCategories;
+const CategoryContainer: React.FC = () => {
+  const dispatch = useDispatch();
+
+  const category = useSelector((state: RootState) => state.category);
+  const corners = useSelector((state: RootState) => state.corners.data);
 
   const onEdit = useCallback(() => {}, [category]);
 
@@ -75,16 +75,21 @@ const CategoryContainer: React.FC<ComponentProps> = ({ state, dispatch }) => {
       if (!destination) {
         return;
       }
-      dispatch(editLayoutOrder(destination.index, source.index));
+      dispatch(
+        editLayoutOrder({
+          destination: destination.index,
+          source: source.index,
+        })
+      );
     },
-    [layoutCategories]
+    [corners, dispatch]
   );
 
   const onDelteLayout = useCallback(
     (index: number) => {
-      dispatch(deleteLayoutCategories(index));
+      dispatch(deleteCorner(index));
     },
-    [layoutCategories]
+    [corners, dispatch]
   );
 
   return (
@@ -92,6 +97,7 @@ const CategoryContainer: React.FC<ComponentProps> = ({ state, dispatch }) => {
       <CategoryHeader
         title="카테고리 정보"
         buttonText="수정"
+        buttonVisible={true}
         description="*표시항목은 필수 입력항목입니다."
         onOpen={onEdit}
       />
@@ -125,8 +131,8 @@ const CategoryContainer: React.FC<ComponentProps> = ({ state, dispatch }) => {
         modifierId={category.data.modifierId}
         modifiedDate={category.data.modifiedDate}
       />
-      <CategoryLayout
-        categories={layoutCategories}
+      <ConerLayout
+        corners={corners}
         onDragEnd={onDragEnd}
         onDelete={onDelteLayout}
       />
@@ -134,4 +140,4 @@ const CategoryContainer: React.FC<ComponentProps> = ({ state, dispatch }) => {
   );
 };
 
-export default connectState(CategoryContainer);
+export default CategoryContainer;

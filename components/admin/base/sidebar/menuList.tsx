@@ -1,24 +1,15 @@
 import React, { useState } from 'react';
 
 import { List } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 
 import MenuItem from './menuItem';
-
-interface Menu {
-  id: string;
-  name: string;
-  depth: number;
-  children?: Menu[];
-  url?: string;
-}
+import { Menu } from './menuTab';
 
 export interface MenuListProps {
   menus: Array<Menu>;
-  isRoot?: boolean;
 }
 
-const MenuList: React.FC<MenuListProps> = ({ menus, isRoot }) => {
+const MenuList: React.FC<MenuListProps> = ({ menus }) => {
   const [curSelectedId, setCurSelectedId] = useState<string>('');
 
   const onSelected = (id: string, depth: number) => {

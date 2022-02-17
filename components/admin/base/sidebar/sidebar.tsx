@@ -13,9 +13,13 @@ export interface TabPanelProps {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
+  tabs: {
+    '& button': {
+      fontWeight: 'bold',
+    },
+  },
   tabPanel: {
     width: '220px',
-    boxSizing: 'border-box',
     margin: '10px auto',
     backgroundColor: theme.palette.secondary.main,
   },
@@ -59,7 +63,12 @@ const Sidebar: React.FC = () => {
       }}
       open
     >
-      <Tabs variant="fullWidth" value={curTabIndex} onChange={onTabChange}>
+      <Tabs
+        className={classes.tabs}
+        variant="fullWidth"
+        value={curTabIndex}
+        onChange={onTabChange}
+      >
         <Tab label="전체 메뉴" />
         <Tab label="즐겨찾기" />
       </Tabs>

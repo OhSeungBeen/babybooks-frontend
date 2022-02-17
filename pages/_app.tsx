@@ -1,9 +1,9 @@
 import { defaultTheme, globalStyles } from 'config/theme';
+import { wrapper } from 'modules/store';
 import { NextPage } from 'next';
 import App, { AppContext, AppInitialProps, AppProps } from 'next/app';
 import React, { useEffect } from 'react';
 import { Provider, useStore } from 'react-redux';
-import { wrapper } from 'redux/store';
 
 import { GlobalStyles } from '@mui/material';
 import { ThemeProvider } from '@mui/private-theming';

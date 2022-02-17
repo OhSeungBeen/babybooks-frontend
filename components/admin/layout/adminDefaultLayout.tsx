@@ -3,8 +3,6 @@ import { defaultTheme } from 'config/theme';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import React from 'react';
-import { connectState } from 'redux/store';
-import { ComponentProps, SideBarInfo } from 'types';
 
 import {
   Box,
@@ -14,15 +12,18 @@ import {
   ThemeProvider,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { SideBar } from 'modules/app';
+import { useSelector } from 'react-redux';
+import { RootState } from 'modules';
 
-const Header = dynamic(() => import('./header'));
-const SideBar = dynamic(() => import('./sidebar'));
-const Footer = dynamic(() => import('./footer'));
-const TabBar = dynamic(() => import('./tabbar'));
-const Navigation = dynamic(() => import('./navigation'));
+const Header = dynamic(() => import('../base/header'));
+const SideBar = dynamic(() => import('../base/sidebar/sidebar'));
+const Footer = dynamic(() => import('../base/footer'));
+const TabBar = dynamic(() => import('../base/linkTabBar/linkTabBar'));
+const Navigation = dynamic(() => import('../base/navigation'));
 
 interface StyleProps {
-  sideBar: SideBarInfo;
+  sideBar: SideBar;
   headerHeight: string;
   footerHeight: string;
 }
@@ -60,8 +61,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const AdminLayout: React.FC<ComponentProps> = ({ state, children }) => {
-  const { sideBar, header, footer } = state.app;
+const AdminLayout: React.FC = ({ children }) => {
+
+  const sideBar = useSelector((state: RootState) => state.app.sideBar);
+  const header = useSelector((state: RootState) => state.app.header);
+  const footer = useSelector((state: RootState) => state.app.footer);
 
   const classes = useStyles({
     sideBar,
@@ -105,4 +109,4 @@ const AdminLayout: React.FC<ComponentProps> = ({ state, children }) => {
   );
 };
 
-export default connectState(AdminLayout);
+export default AdminLayout;

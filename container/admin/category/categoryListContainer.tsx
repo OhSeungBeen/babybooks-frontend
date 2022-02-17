@@ -1,77 +1,53 @@
-import CategoryAdd from 'components/admin/category/categoryAdd';
-import CategoryHeader from 'components/admin/category/categoryHeader';
-import CategoryList from 'components/admin/category/categoryList';
-import CategoryListFilter from 'components/admin/category/categoryListFilter';
-import React, { useCallback, useState } from 'react';
-import { setCategory } from 'redux/actions/category';
-import { connectState } from 'redux/store';
-import { Category, ComponentProps } from 'types';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const CategoryListContainer: React.FC<ComponentProps> = ({
-  state,
-  dispatch,
-}) => {
-  const categories = state.categories;
+import CategoryAdd from '../../../components/admin/category/categoryAdd';
+import CategoryHeader from '../../../components/admin/category/categoryHeader';
+import CategoryList from '../../../components/admin/category/categoryList';
+import CategoryListFilter from '../../../components/admin/category/categoryListFilter';
+import { RootState } from '../../../modules';
+import {
+  Category,
+  createCategory,
+  getAllCategories,
+  setSelectedId,
+} from '../../../modules/categories';
+import { setCategory } from '../../../modules/category';
+
+const CategoryListContainer: React.FC = () => {
+  const dispatch = useDispatch();
+
+  const categories = useSelector((state: RootState) => state.categories.data);
+  const selectedId = useSelector(
+    (state: RootState) => state.categories.selectedId
+  );
 
   const [open, setOpen] = useState(false);
+  const [addAvailable, setaddAvailable] = useState(true);
   const [filterdCategories, setFilterdCategories] = useState(null);
   const [placehoder, setPlacehoder] = useState({
     input: '대카테고리명',
-    header: null,
+    header: [],
   });
 
-  const onOpen = useCallback(() => {
-    setOpen(true);
-  }, [open]);
-
-  const onConfirm = useCallback(() => {
-    setOpen(false);
-  }, [open]);
-
-  const onCancel = useCallback(() => {
-    setOpen(false);
-  }, [open]);
-
-  const foundAddedDepthCategory = (
-    categories: Category[],
-    id: string,
-    depth: number = 0,
-    index: number = 0
-  ): Category => {
-    if (index < categories.length) {
-      if (categories[index].id === id) {
-        categories[index].depth = depth;
-        return categories[index];
-      }
-      if (categories[index].children) {
-        const category = foundAddedDepthCategory(
-          categories[index].children,
-          id,
-          depth + 1,
-          0
-        );
-        if (category) {
-          return category;
-        }
-      }
-      return foundAddedDepthCategory(categories, id, depth, index + 1);
-    }
-  };
+  useEffect(() => {
+    dispatch(getAllCategories());
+  }, [dispatch]);
 
   const filterCategories = (
     categories: Category[],
-    filterIdnex: { visible: number; use: number }
+    filterIndex: { visible: number; use: number }
   ) => {
     let copyCategories = JSON.parse(JSON.stringify(categories));
     return copyCategories.filter((category: Category) => {
       if (category.children)
-        category.children = filterCategories(category.children, filterIdnex);
+        category.children = filterCategories(category.children, filterIndex);
       if (category.data) {
-        const use = filterIdnex.use === 1;
-        const visible = filterIdnex.visible === 1;
-        if (filterIdnex.visible === 0) {
+        const use = filterIndex.use === 1;
+        const visible = filterIndex.visible === 1;
+        if (filterIndex.visible === 0) {
           return category.data.use === use;
-        } else if (filterIdnex.use === 0) {
+        } else if (filterIndex.use === 0) {
           return category.data.visible === visible;
         } else {
           return category.data.visible === visible && category.data.use === use;
@@ -86,27 +62,78 @@ const CategoryListContainer: React.FC<ComponentProps> = ({
     });
   };
 
+  const onOpen = useCallback(() => {
+    setOpen(true);
+  }, [open, selectedId]);
+
+  const onConfirm = useCallback(() => {
+    setOpen(false);
+  }, [open, dispatch]);
+
+  const onCancel = useCallback(() => {
+    setOpen(false);
+  }, [open]);
+
+  const getCategoryById = (
+    categories: Category[],
+    id: string
+  ): Category | null => {
+    let res = null;
+
+    const findCategory = (categories: Category[], id: string) => {
+      categories.forEach((category) => {
+        if (category.id === id) {
+          res = category;
+          return;
+        }
+
+        if (category.children) {
+          findCategory(category.children, id);
+        }
+      });
+    };
+    findCategory(categories, id);
+    return res;
+  };
+
   const onNodeSelect = useCallback(
     (e: React.SyntheticEvent, id: string) => {
-      if (id === 'root') {
-        setPlacehoder({ input: '대카테고리명', header: null });
+      dispatch(setSelectedId(id));
+
+      // 루트카테고리일 때
+      if (id === '0') {
+        setaddAvailable(true);
+        setPlacehoder({ input: '대카테고리명', header: [] });
         return;
       }
-      const category = foundAddedDepthCategory(categories, id);
+
+      const category = getCategoryById(categories, id);
+
       if (category.data) {
         dispatch(setCategory(category));
       }
-      if (category.depth === 0) {
-        setPlacehoder({ input: '중카테고리명', header: [category.name] });
-        return;
-      }
-      if (category.depth === 1) {
-        const parent = foundAddedDepthCategory(categories, category.parentId);
+
+      if (category.parentId) {
+        const parentCategory = getCategoryById(categories, category.parentId);
+
+        // 소카테고리일 때
+        if (parentCategory.parentId) {
+          setaddAvailable(false);
+        } else {
+          // 중카테고리일 때
+          setaddAvailable(true);
+          setPlacehoder({
+            input: '소카테고리명',
+            header: [parentCategory.name, category.name],
+          });
+        }
+      } else {
+        // 대카테고리일 때
+        setaddAvailable(true);
         setPlacehoder({
-          input: '소카테고리명',
-          header: [parent.name, category.name],
+          input: '중카테고리명',
+          header: [category.name],
         });
-        return;
       }
     },
     [categories]
@@ -125,7 +152,12 @@ const CategoryListContainer: React.FC<ComponentProps> = ({
 
   return (
     <>
-      <CategoryHeader title="전시카테고리" buttonText="추가" onOpen={onOpen} />
+      <CategoryHeader
+        title="전시카테고리"
+        buttonText="추가"
+        onOpen={onOpen}
+        buttonVisible={addAvailable}
+      />
       <CategoryAdd
         open={open}
         placeholder={placehoder}
@@ -136,9 +168,10 @@ const CategoryListContainer: React.FC<ComponentProps> = ({
       <CategoryList
         categories={filterdCategories ? filterdCategories : categories}
         onNodeSelect={onNodeSelect}
+        selectedId={selectedId}
       />
     </>
   );
 };
 
-export default connectState(CategoryListContainer);
+export default CategoryListContainer;
