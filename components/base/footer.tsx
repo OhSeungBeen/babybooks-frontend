@@ -8,10 +8,11 @@ const useStyles = makeStyles({
   footer: {
     display: 'flex',
     background: '#fffbf4',
+    height: '15.5rem',
   },
   container: {
     display: 'flex',
-    padding: '3rem 0px',
+    padding: '1.5rem 0px',
     justifyContent: 'space-between',
   },
   left: {
