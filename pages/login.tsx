@@ -18,49 +18,62 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     justifyContent: 'center',
     height: 'calc(100vh - 4.5rem - 15.5rem)',
-    width: '20rem',
+    width: '30.6875rem',
     margin: '0 auto',
   },
-  desc: {
-    marginBottom: '2rem',
+  title: {
+    color: '#000000',
+    fontWeight: 'bold',
+    fontSize: '26px',
+    marginBottom: '60px',
   },
   input: {
-    marginBottom: '1rem',
+    height: '55px',
+    marginBottom: '10px',
+    '& + &': {
+      marginBottom: '30px',
+    },
   },
   loginButton: {
+    height: '55px',
     backgroundColor: '#1D1D1D',
-    marginBottom: '1rem',
+    marginBottom: '40px',
     '&:hover': {
       backgroundColor: '#1D1D1D',
     },
   },
   service: {
     display: 'flex',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     marginBottom: '2rem',
-    '& div + div': {
-      borderLeft: '1px solid #000000',
-    },
   },
   serviceButton: {
-    fontSize: '0.875rem',
-    padding: '0 0.5rem',
+    '& + &': {
+      marginLeft: '44px',
+    },
   },
-  snsLogin: {
-    textAlign: 'center',
-    marginBottom: '1rem',
+  snsLoginWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: '42px',
+    '& hr': {
+      width: '156px',
+    },
   },
+  snsLogin: {},
   snsLoginContainer: {
     display: 'flex',
     justifyContent: 'center',
     '& button + button': {
-      marginLeft: '1rem',
+      marginLeft: '80px',
     },
   },
-  iconButton: {
-    width: '3rem',
-    height: '3rem',
-    backgroundColor: 'crimson',
+  snsLoginButton: {
+    minWidth: '52px',
+    height: '52px',
+    padding: '0',
+    boxShadow: '5px 5px 10px #00000033',
   },
 });
 
@@ -71,9 +84,10 @@ const LoginPage = () => {
     <>
       <Header />
       <Box className={classes.loginForm}>
-        <Typography variant="h6">안녕하세요.</Typography>
-        <Typography variant="h6" className={classes.desc}>
-          베비북스 입니다.
+        <Typography variant="h6" className={classes.title}>
+          안녕하세요.
+          <br />
+          베비북스입니다.
         </Typography>
         <OutlinedInput
           size="small"
@@ -97,11 +111,15 @@ const LoginPage = () => {
           <Box className={classes.serviceButton}>비밀번호 찾기</Box>
           <Box className={classes.serviceButton}>회원 가입</Box>
         </Box>
-        <Typography className={classes.snsLogin}>간편 로그인</Typography>
+        <Box className={classes.snsLoginWrapper}>
+          <hr />
+          <Typography className={classes.snsLogin}>간편 로그인</Typography>
+          <hr />
+        </Box>
         <Box className={classes.snsLoginContainer}>
-          <IconButton className={classes.iconButton}></IconButton>
-          <IconButton className={classes.iconButton}></IconButton>
-          <IconButton className={classes.iconButton}></IconButton>
+          <Button className={classes.snsLoginButton}></Button>
+          <Button className={classes.snsLoginButton}></Button>
+          <Button className={classes.snsLoginButton}></Button>
         </Box>
       </Box>
       <Footer />
